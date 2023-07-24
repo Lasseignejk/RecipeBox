@@ -1,8 +1,14 @@
 import React from 'react'
+import { useAppSelector } from '../util/hooks'
 
-const Page = () => {
+interface PageProps {
+	title: string;
+}
+
+const Page = ({title}:PageProps) => {
+  const selected = useAppSelector((state) => state.selected.value)
   return (
-    <div>Page</div>
+    <div>{title}</div>
   )
 }
 

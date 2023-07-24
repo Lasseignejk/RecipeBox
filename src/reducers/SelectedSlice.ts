@@ -6,15 +6,15 @@ interface SelectedInitialState {
 }
 
 const initialState: SelectedInitialState = {
-	value: "Home",
+	value: "Plan",
 };
 
 export const selectedSlice = createSlice({
 	name: "selected",
     initialState,
     reducers: {
-        setSelected: (state, action: PayloadAction<SelectedInitialState>) => {
-            state = action.payload
+        setSelected: (state, action: PayloadAction<string>) => {
+            state.value = action.payload
         }
     }
 });
