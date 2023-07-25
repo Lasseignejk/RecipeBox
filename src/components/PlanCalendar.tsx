@@ -12,8 +12,8 @@ const PlanCalendar = (): JSX.Element => {
 		<div>
 			<CalendarNav />
 			<div className="flex justify-around">
-				{currentWeek.map((date) => (
-					<CalandarSmallDate date={date} />
+				{currentWeek.map((date, index) => (
+					<CalandarSmallDate date={date} key={index} />
 				))}
 			</div>
 		</div>

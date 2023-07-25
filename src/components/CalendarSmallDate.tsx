@@ -10,7 +10,7 @@ const CalendarSmallDate = ({ date }: CalendarProps): JSX.Element => {
 	const month = date.date.slice(4, 7);
 	const dateNum = date.date.slice(8, 10);
 
-	const formatDateNum = () => {
+	const formatDateNum = (dateNum: string): string => {
 		if (dateNum[0] == "0") {
 			return dateNum[1];
 		}
@@ -26,7 +26,7 @@ const CalendarSmallDate = ({ date }: CalendarProps): JSX.Element => {
 			data-testid="date"
 			className={`flex flex-col w-full items-center  ${todayClasses} `}>
 			<p className={`text-sm`}>{dayOfWeek}</p>
-			<p className={`text-xl`}>{formatDateNum()}</p>
+			<p className={`text-xl`}>{formatDateNum(dateNum)}</p>
 		</div>
 	);
 };

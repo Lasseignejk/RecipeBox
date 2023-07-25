@@ -5,12 +5,13 @@ import {
 	incrementCounter,
 	updateCurrentWeek,
 } from "../reducers/TodaySlice";
+import { expect, it, describe } from "vitest";
 
 interface MonthsData {
 	[key: string]: string;
 }
 
-const CalendarNav = () => {
+const CalendarNav = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const currentWeek = useAppSelector((state) => state.today.currentWeek);
@@ -43,6 +44,14 @@ const CalendarNav = () => {
 	const beginningDate = currentWeek[0].date.slice(8, 10);
 	const endMonth = months[currentWeek[6].date.slice(4, 7)];
 	const endDate = currentWeek[6].date.slice(8, 10);
+
+	const formatDateNum = (dateNum: string): string => {
+		if (dateNum[0] == "0") {
+			return dateNum[1];
+		}
+		return dateNum;
+	};
+
 	return (
 		<div className={`flex gap-1 text-lightPrimary items-center font-bold`}>
 			<button
@@ -51,7 +60,8 @@ const CalendarNav = () => {
 				<FaCaretLeft />
 			</button>
 			<h1>
-				{beginningMonth} {beginningDate} - {endMonth} {endDate}
+				{beginningMonth} {formatDateNum(beginningDate)} - {endMonth}{" "}
+				{formatDateNum(endDate)}
 			</h1>
 			<button
 				onClick={() => handleIncrement()}
