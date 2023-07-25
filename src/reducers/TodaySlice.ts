@@ -12,7 +12,6 @@ interface SelectedInitialState {
 	today: string;
     notToday: string;
     currentWeek: CurrentWeek[]
-    notCurrentWeek: CurrentWeek[]
     counter: number
 }
 
@@ -20,7 +19,6 @@ const initialState: SelectedInitialState = {
 	today: dayjs().toDate().toDateString(),
 	notToday: dayjs().toDate().toDateString(),
 	currentWeek: getAllDaysInWeek(),
-    notCurrentWeek: getAllDaysInWeek(),
     counter: 0
 };
 
@@ -34,12 +32,12 @@ export const selectedSlice = createSlice({
 		decrementCounter: (state) => {
             state.counter -= 7
 		},
-        updateNotCurrentWeek: (state) => {
-            state.notCurrentWeek = getAllDaysInWeek("", state.counter)
+        updateCurrentWeek: (state) => {
+            state.currentWeek = getAllDaysInWeek("", state.counter)
         }
 
 	},
 });
 
-export const { incrementCounter, decrementCounter, updateNotCurrentWeek } = selectedSlice.actions;
+export const { incrementCounter, decrementCounter, updateCurrentWeek } = selectedSlice.actions;
 export default selectedSlice.reducer;
