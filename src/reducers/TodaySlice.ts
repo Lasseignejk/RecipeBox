@@ -6,18 +6,19 @@ import { getAllDaysInWeek } from "../util/calendarFunctions";
 interface CurrentWeek {
 	date: string;
 	today: boolean;
+	selected: boolean;
 }
 
 interface SelectedInitialState {
 	today: string;
-	notToday: string;
 	currentWeek: CurrentWeek[];
 	counter: number;
+	selectedDay: Date | string;
 }
 
 const initialState: SelectedInitialState = {
 	today: dayjs().toDate().toDateString(),
-	notToday: dayjs().toDate().toDateString(),
+	selectedDay: dayjs().toDate().toDateString(),
 	currentWeek: getAllDaysInWeek(),
 	counter: 0,
 };
@@ -35,9 +36,22 @@ export const selectedSlice = createSlice({
 		updateCurrentWeek: (state) => {
 			state.currentWeek = getAllDaysInWeek("", state.counter);
 		},
+		updateSelectedDay: (state, action: PayloadAction<string>) => {
+			state.selectedDay = new Date(action.payload).toDateString();
+			// const indexToUpdate = state.currentWeek.findIndex(
+			// 	(item) => item.date === action.payload
+			// );
+			// if (indexToUpdate !== -1) {
+			// 	state.currentWeek[indexToUpdate].selected = true;
+			// }
+		},
 	},
 });
 
-export const { incrementCounter, decrementCounter, updateCurrentWeek } =
-	selectedSlice.actions;
+export const {
+	incrementCounter,
+	decrementCounter,
+	updateCurrentWeek,
+	updateSelectedDay,
+} = selectedSlice.actions;
 export default selectedSlice.reducer;

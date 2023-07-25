@@ -11,13 +11,13 @@ const initialState: SelectedInitialState = {
 
 export const selectedSlice = createSlice({
 	name: "selected",
-    initialState,
-    reducers: {
-        setSelected: (state, action: PayloadAction<string>) => {
-            state.value = action.payload
-        }
-    }
+	initialState,
+	reducers: {
+		setSelected: (state, action: PayloadAction<string>) => {
+			state.value = action.payload;
+		},
+	},
 });
 
-export const {setSelected} = selectedSlice.actions;
+export const { setSelected } = selectedSlice.actions;
 export default selectedSlice.reducer;
