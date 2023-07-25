@@ -1,5 +1,5 @@
 import { useAppSelector } from '../util/hooks'
-import PlanCalandar from './PlanCalandar';
+import PlanCalendar from './PlanCalendar';
 
 interface PageProps {
 	title: string;
@@ -11,7 +11,7 @@ const Page = ({title}:PageProps):JSX.Element => {
 		<div>
 			{selected == "Plan" && (
 				<>
-          <PlanCalandar />
+          <PlanCalendar />
 					<h1>{title}</h1>
 				</>
 			)}

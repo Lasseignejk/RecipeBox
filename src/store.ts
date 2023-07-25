@@ -1,10 +1,12 @@
 import {configureStore} from "@reduxjs/toolkit"
 import selectedReducer from "./reducers/SelectedSlice"
+import todayReducer from "./reducers/TodaySlice";
 import {useDispatch} from "react-redux"
 
 export const store = configureStore({
     reducer: {
         selected: selectedReducer,
+        today: todayReducer
     }
 });
 
