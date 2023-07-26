@@ -3,6 +3,9 @@ import { useAppSelector } from "../util/hooks";
 import PlanCalendar from "./PlanCalendar";
 import { TbFridge } from "react-icons/tb";
 import PlanCard from "./PlanCard";
+import PageTitle from "./PageTitle";
+import Button from "./Button";
+import RecipeContainer from "./Recipe/RecipeContainer";
 
 interface PageProps {
 	title: string;
@@ -57,9 +60,28 @@ const Page = ({ title }: PageProps): JSX.Element => {
 					</div>
 				</>
 			)}
-			{selected == "Recipes" && <h1>{title}</h1>}
-			{selected == "Groceries" && <h1>{title}</h1>}
-			{selected == "Account" && <h1>{title}</h1>}
+			{selected == "Recipes" && (
+				<div className={`p-3`}>
+					<PageTitle title={title} />
+					<Button
+						text={"New Recipe"}
+						passedFunction={() => console.log("clicked")}
+						outline={true}
+						absolute={true}
+					/>
+					<RecipeContainer column={true} />
+				</div>
+			)}
+			{selected == "Groceries" && (
+				<div className={`p-3`}>
+					<PageTitle title={title} />
+				</div>
+			)}
+			{selected == "Account" && (
+				<div className={`p-3`}>
+					<PageTitle title={title} />
+				</div>
+			)}
 		</div>
 	);
 };

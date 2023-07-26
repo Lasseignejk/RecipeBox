@@ -12,7 +12,7 @@ const PlanCalendar = (): JSX.Element => {
 		<div
 			className={`py-5 flex flex-col gap-5 bg-lightSurfCon sticky top-0`}>
 			<CalendarNav />
-			<div className="flex justify-around">
+			<div className="flex justify-around px-1">
 				{currentWeek.map((date, index) => (
 					<CalandarSmallDate date={date} key={index} />
 				))}

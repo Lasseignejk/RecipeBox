@@ -15,7 +15,7 @@ const CalendarSmallDate = ({ date }: CalendarProps): JSX.Element => {
 	const dayOfWeek = date.date.slice(0, 3);
 	const month = date.date.slice(4, 7);
 	const dateNum = date.date.slice(8, 10);
-	console.log(selectedDay);
+	// console.log(selectedDay);
 
 	const formatDateNum = (dateNum: string): string => {
 		if (dateNum[0] == "0") {
