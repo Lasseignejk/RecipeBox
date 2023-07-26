@@ -7,9 +7,9 @@ interface RecipeContainerProps {
 }
 
 const RecipeContainer = ({ column }: RecipeContainerProps): JSX.Element => {
-	const columnClasses = column ? "flex flex-col" : "flex flex-wrap";
+	const columnClasses = column ? "flex flex-col gap-5" : "flex flex-wrap";
 	return (
-		<div className={`${columnClasses}`}>
+		<div className={`pt-3 ${columnClasses}`}>
 			{recipes.map((recipe, index) => (
 				<RecipeCard data={recipe} key={index} column={column} />
 			))}

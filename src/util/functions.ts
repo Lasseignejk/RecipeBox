@@ -22,3 +22,15 @@ export const formatRecipeName = (
 		return newName + "...";
 	}
 };
+
+export const formatTime = (recipeTime: number): string => {
+	if (recipeTime < 60) {
+		return recipeTime + " min";
+	} else {
+		const hours = Math.trunc(recipeTime / 60);
+		const min = recipeTime % 60;
+		const hourWord = hours == 1 ? " hr" : " hrs";
+		const checkMin = min != 0 ? ` ${min} min` : "";
+		return hours + hourWord + checkMin;
+	}
+};
