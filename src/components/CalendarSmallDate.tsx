@@ -26,8 +26,8 @@ const CalendarSmallDate = ({ date }: CalendarProps): JSX.Element => {
 
 	const todayClasses =
 		date.today == true
-			? "border-2 border-lightSurf text-lightPrimary font-bold rounded-md"
-			: "border-2 border-lightSurf text-lightSecondary";
+			? "border-2 border-lightSurfCon text-lightPrimary font-bold rounded-md"
+			: "border-2 border-lightSurfCon text-lightSecondary";
 
 	const selectedClasses =
 		date.date == selectedDay

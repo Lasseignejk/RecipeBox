@@ -9,7 +9,8 @@ const PlanCalendar = (): JSX.Element => {
 	// const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday" ]
 
 	return (
-		<div>
+		<div
+			className={`py-5 flex flex-col gap-5 bg-lightSurfCon sticky top-0`}>
 			<CalendarNav />
 			<div className="flex justify-around">
 				{currentWeek.map((date, index) => (
