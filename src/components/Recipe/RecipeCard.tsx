@@ -40,14 +40,14 @@ interface InstructionsData {
 const RecipeCard = ({ data, column }: RecipeCardProps) => {
 	const columnClasses = column
 		? "recipe_card_horizontal gap-1"
-		: "flex flex-col";
+		: "recipe_card_vertical gap-1 w-full max-w-[350px]";
 	const imageColumnClasses = column
 		? "w-14 h-14 rounded-xl object-cover"
-		: "";
+		: "w-36 h-36 rounded-xl object-cover";
 
 	return (
 		<div
-			className={`relative ${columnClasses} bg-lightSurfCon p-3 rounded-xl`}>
+			className={`relative ${columnClasses} bg-lightSurfConLow p-3 rounded-xl`}>
 			<Button
 				icon={<FaCaretDown />}
 				passedFunction={() => console.log("clicked")}
@@ -87,7 +87,7 @@ const RecipeCard = ({ data, column }: RecipeCardProps) => {
 				{data.tags &&
 					data.tags.map((tag) => (
 						<span
-							className={`px-3 rounded-xl border-lightOutlineVar border-[1px] text-lightSecondary`}>
+							className={`px-3 rounded-xl border-lightOutlineVar border-[1px] text-lightSecondary text-sm`}>
 							{tag}
 						</span>
 					))}

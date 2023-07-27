@@ -1,15 +1,21 @@
-import { ReactNode } from "react"
-import {FaUser, FaCalendarAlt, FaBook, FaClipboardList, FaUserFriends} from "react-icons/fa"
-import NavLink from "./NavLink"
+import { ReactNode } from "react";
+import {
+	FaUser,
+	FaCalendarAlt,
+	FaBook,
+	FaClipboardList,
+	FaUserFriends,
+} from "react-icons/fa";
+import NavLink from "./NavLink";
 
 interface LinksInterface {
-    title: string,
-    icon: ReactNode,
-    link: string,
+	title: string;
+	icon: ReactNode;
+	link: string;
 }
 
 const Nav = () => {
-    const links: LinksInterface[] = [
+	const links: LinksInterface[] = [
 		{
 			title: "Plan",
 			icon: <FaCalendarAlt />,
@@ -32,17 +38,16 @@ const Nav = () => {
 			link: "http://localhost:5173/account",
 		},
 	];
-  return (
-    <nav className={`h-16 fixed bottom-0 w-full bg-lightSurfCon`}>
-        <h1 className={`hidden`}>Recipe Box</h1>
-        <ul className={`flex justify-evenly h-full items-center`}>
-            {links.map((link, index) => (
-                <NavLink link={link} key={index}/>
-            ))}
-        </ul>
+	return (
+		<nav className={`h-16 fixed bottom-0 w-full bg-lightSurfCon z-10`}>
+			<h1 className={`hidden`}>Recipe Box</h1>
+			<ul className={`flex justify-evenly h-full items-center`}>
+				{links.map((link, index) => (
+					<NavLink link={link} key={index} />
+				))}
+			</ul>
+		</nav>
+	);
+};
 
-    </nav>
-  )
-}
-
-export default Nav
+export default Nav;
