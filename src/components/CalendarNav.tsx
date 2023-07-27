@@ -53,7 +53,7 @@ const CalendarNav = (): JSX.Element => {
 	};
 
 	return (
-		<div className={`flex gap-1 text-lightPrimary items-center font-bold`}>
+		<div className={`flex gap-1 text-lightPrimText items-center font-bold`}>
 			<button
 				onClick={() => handleDecrement()}
 				className={`w-8 h-8 flex justify-center items-center text-xl`}>

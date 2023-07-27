@@ -1,7 +1,19 @@
-import { FaCaretDown, FaRegClock, FaUtensilSpoon } from "react-icons/fa";
-import { PiCookingPot, PiKnifeFill, PiTimerBold } from "react-icons/pi";
+import {
+	FaCalendarPlus,
+	FaCaretDown,
+	FaPlus,
+	FaRegClock,
+	FaUtensilSpoon,
+} from "react-icons/fa";
+import {
+	PiCookingPot,
+	PiDotOutline,
+	PiKnifeFill,
+	PiTimerBold,
+} from "react-icons/pi";
 import { formatRecipeName, formatTime } from "../../util/functions";
 import Button from "../Button";
+import Tag from "../Tag";
 
 interface RecipeCardProps {
 	data: RecipeData;
@@ -83,14 +95,32 @@ const RecipeCard = ({ data, column }: RecipeCardProps) => {
 				{formatTime(data.total_time)}
 			</div>
 
-			<div className={`recipe_tags flex gap-3 justify-center mt-2`}>
-				{data.tags &&
-					data.tags.map((tag) => (
-						<span
-							className={`px-3 rounded-xl border-lightOutlineVar border-[1px] text-lightSecondary text-sm`}>
-							{tag}
-						</span>
+			{data.tags && (
+				<div className={`recipe_tags flex gap-3 justify-center mt-2`}>
+					{data.tags.map((tag) => (
+						<Tag tag={tag} />
 					))}
+				</div>
+			)}
+
+			<div className="recipe_add_buttons flex justify-center gap-14 pt-2">
+				<Button
+					icon={<FaPlus />}
+					passedFunction={() => console.log("added to today's plan")}
+					outline={false}
+					color={""}
+					style={"inverted"}
+					rounded={false}
+				/>
+				<Button
+					icon={<FaCalendarPlus />}
+					passedFunction={() =>
+						console.log("trigger modal with calendar")
+					}
+					outline={false}
+					color={"bg-lightSecondary text-lightSurfConLow"}
+					rounded={true}
+				/>
 			</div>
 		</div>
 	);

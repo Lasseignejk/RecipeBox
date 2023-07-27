@@ -16,7 +16,7 @@ const PlanCard = ({ card }: CardsProps): JSX.Element => {
 	return (
 		<div className={`gap-3 p-3 rounded-xl font-bold ${highlightClasses}`}>
 			<div className={`flex gap-1`}>
-				{card.icon && <span className={`text-xl`}>{card.icon}</span>}
+				{card.icon && <span className={`text-2xl`}>{card.icon}</span>}
 				<p>{card.title}</p>
 			</div>
 		</div>

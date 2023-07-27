@@ -9,6 +9,8 @@ interface ButtonProps {
 	absolute?: boolean;
 	top?: string;
 	right?: string;
+	rounded?: boolean;
+	style?: string;
 }
 
 const Button = ({
@@ -20,16 +22,27 @@ const Button = ({
 	absolute,
 	top,
 	right,
+	rounded,
+	style,
 }: ButtonProps) => {
 	const outlineClasses = outline
-		? "border-[1px] border-lightOutline px-3 text-sm rounded-xl hover:scale-105 duration-200 ease-in-out"
+		? "border-[1px] border-lightOutline px-4 text-sm rounded-xl hover:scale-105 duration-200 ease-in-out"
 		: "";
 	const absoluteClasses = absolute ? "absolute" : "";
-	const iconClasses = icon ? "text-xl" : "";
+	const iconClasses = icon ? "text-lg" : "";
+	const defaultClasses =
+		style == "default"
+			? "bg-lightSecondary text-lightSurfCon rounded-full px-4 py-1"
+			: "";
+	const invertedClasses =
+		style == "inverted"
+			? "border-[1px] border-lightOutline px-4 rounded-full"
+			: "";
+	const roundedClasses = rounded ? "px-4 py-1 rounded-full" : "";
 	return (
 		<button
 			onClick={() => passedFunction()}
-			className={`text-lightPrimary ${outlineClasses} ${absoluteClasses} ${iconClasses} ${top} ${right}`}>
+			className={`text-lightPrimary ${outlineClasses} ${absoluteClasses} ${iconClasses} ${top} ${right} ${color} ${roundedClasses} ${defaultClasses} ${invertedClasses}`}>
 			{text ? text : icon}
 		</button>
 	);

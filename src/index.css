@@ -2,10 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	--lightSurf: #fff8f1;
+	--lightSurfDim: #e0d9d0;
+	--lightSurfCon: #f4ede4;
+	--lightSurfConLow: #faf2e9;
+	--lightSurfConHigh: #eee7de;
+	--lightSurfConHighest: #e9e1d9;
+	--lightPrimary: #765b00;
+	--lightSecondary: #6a5d3f;
+	--lightTertiary: #1a6c31;
+	--lightError: #ba1a1a;
+	--lightSecIcon: #baaa87;
+	--lightOutline: #7e7667;
+	--lightOutlineVar: #cfc5b4;
+	--lightMain: #edc148;
+	--lightPrimCon: #ffdf93;
+	--lightPrimText: #241a00;
+}
+
 body {
 	padding: 0;
 	margin: 0;
 	background-color: #fff8f1;
+	color: var(--lightPrimText);
 }
 
 .recipe_card_horizontal {
@@ -13,7 +33,8 @@ body {
 	grid-template-areas:
 		"img title title title"
 		"img time-prep time-cook time-total"
-		"tags tags tags tags";
+		"tags tags tags tags"
+		"buttons buttons buttons buttons";
 	grid-template-columns: 3.5rem 1fr 1fr 1fr;
 }
 
@@ -23,7 +44,8 @@ body {
 		"img img img"
 		"title title title"
 		"time-prep time-cook time-total"
-		"tags tags tags";
+		"tags tags tags"
+		"buttons buttons buttons";
 	place-items: center;
 }
 
@@ -49,4 +71,8 @@ body {
 
 .recipe_tags {
 	grid-area: tags;
+}
+
+.recipe_add_buttons {
+	grid-area: buttons;
 }

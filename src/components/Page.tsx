@@ -6,6 +6,7 @@ import PlanCard from "./PlanCard";
 import PageTitle from "./PageTitle";
 import Button from "./Button";
 import RecipeContainer from "./Recipe/RecipeContainer";
+import SearchBar from "./Search/SearchBar";
 
 interface PageProps {
 	title: string;
@@ -61,7 +62,7 @@ const Page = ({ title }: PageProps): JSX.Element => {
 				</>
 			)}
 			{selected == "Recipes" && (
-				<div className={`p-3`}>
+				<div className={`p-3 flex flex-col gap-2`}>
 					<PageTitle title={title} />
 					<Button
 						text={"New Recipe"}
@@ -71,6 +72,7 @@ const Page = ({ title }: PageProps): JSX.Element => {
 						top="top-5"
 						right="right-3"
 					/>
+					<SearchBar />
 					<RecipeContainer column={true} />
 				</div>
 			)}

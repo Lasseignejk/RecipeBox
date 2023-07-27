@@ -4,6 +4,7 @@ module.exports = {
 	theme: {
 		colors: {
 			lightSurf: "#fff8f1",
+			lightSurfDim: "#e0d9d0",
 			lightSurfCon: "#f4ede4",
 			lightSurfConLow: "#faf2e9",
 			lightSurfConHigh: "#eee7de",
@@ -15,7 +16,9 @@ module.exports = {
 			lightSecIcon: "#baaa87",
 			lightOutline: "#7e7667",
 			lightOutlineVar: "#cfc5b4",
-			lightMain: "#edc148"
+			lightMain: "#edc148",
+			lightPrimCon: "#ffdf93",
+			lightPrimText: "#241a00",
 		},
 		extend: {},
 	},
