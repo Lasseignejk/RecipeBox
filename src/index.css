@@ -28,12 +28,6 @@ body {
 	color: var(--lightPrimText);
 }
 
-.recipe_card_view_more {
-	transition-duration: 200ms;
-	transition-timing-function: ease-in-out;
-	rotate: 180deg;
-}
-
 .recipe_card_horizontal {
 	display: grid;
 	grid-template-areas:

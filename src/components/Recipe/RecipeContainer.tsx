@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { recipes } from "../../util/recipes";
 import RecipeCard from "./RecipeCard";
 import { useAppDispatch } from "../../store";
@@ -45,7 +45,7 @@ interface FormattedData {
 const RecipeContainer = ({ column }: RecipeContainerProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const allRecipes = useAppSelector((state) => state.showMore.showRecipe);
-	const columnClasses = column
+	const columnClasses: string = column
 		? "flex flex-col gap-5"
 		: "flex flex-wrap gap-5 justify-center";
 
@@ -60,7 +60,7 @@ const RecipeContainer = ({ column }: RecipeContainerProps): JSX.Element => {
 		);
 		return formattedData;
 	};
-	const recipeData = formatRecipes(recipes);
+	const recipeData: FormattedData = formatRecipes(recipes);
 
 	useEffect(() => {
 		dispatch(setAllRecipes(recipeData));

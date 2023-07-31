@@ -53,24 +53,24 @@ const RecipeCard = ({ data, column }: RecipeCardProps) => {
 	const [buttonClasses, setButtonClasses] = useState<string>("");
 	const [ingredientsClasses, setIngredientsClasses] =
 		useState<string>("hidden");
-	const columnClasses = column
+	const columnClasses: string = column
 		? "recipe_card_horizontal gap-1"
 		: "recipe_card_vertical gap-1 w-full max-w-[350px]";
-	const imageColumnClasses = column
+	const imageColumnClasses: string = column
 		? "w-14 h-14 rounded-xl object-cover"
 		: "w-36 h-36 rounded-xl object-cover";
 
-	const handleOpen = () => {
+	const handleOpen = (): void => {
 		showRecipe[data.recipe_name] == true ? closeSection() : openSection();
 	};
 
-	const openSection = () => {
+	const openSection = (): void => {
 		dispatch(showRecipeTrue(data.recipe_name));
 		setButtonClasses("rotate-180 ease-in duration-200");
 		setIngredientsClasses("block");
 	};
 
-	const closeSection = () => {
+	const closeSection = (): void => {
 		dispatch(showRecipeFalse(data.recipe_name));
 		setButtonClasses("rotate-0 ease-in duration-200");
 		setIngredientsClasses("hidden");
@@ -118,8 +118,8 @@ const RecipeCard = ({ data, column }: RecipeCardProps) => {
 
 			{data.tags && (
 				<div className={`recipe_tags flex gap-3 justify-center mt-2`}>
-					{data.tags.map((tag) => (
-						<Tag tag={tag} />
+					{data.tags.map((tag: string, index: number) => (
+						<Tag tag={tag} key={index} />
 					))}
 				</div>
 			)}

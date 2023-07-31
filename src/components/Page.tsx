@@ -55,8 +55,8 @@ const Page = ({ title }: PageProps): JSX.Element => {
 				<>
 					<PlanCalendar />
 					<div className="flex flex-col gap-5 p-3">
-						{cards.map((card: CardsProps) => (
-							<PlanCard card={card} />
+						{cards.map((card: CardsProps, index: number) => (
+							<PlanCard card={card} key={index} />
 						))}
 					</div>
 				</>
