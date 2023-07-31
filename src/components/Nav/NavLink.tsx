@@ -1,30 +1,33 @@
-import React, { ReactNode } from 'react'
-import { setSelected } from '../../reducers/SelectedSlice'
-import { useAppDispatch } from '../../store'
-import { Link } from 'react-router-dom'
-import { useAppSelector } from '../../util/hooks'
+import { ReactNode } from "react";
+import { setSelectedNav } from "../../reducers/SelectedSlice";
+import { useAppDispatch } from "../../store";
+import { Link } from "react-router-dom";
+import { useAppSelector } from "../../util/hooks";
 
 type LinksType = {
-    title: string,
-    icon: ReactNode,
-    link: string
-}
+	title: string;
+	icon: ReactNode;
+	link: string;
+};
 
 interface NavLinkProps {
-    link: LinksType
+	link: LinksType;
 }
 
-const NavLink = ({link}:NavLinkProps):JSX.Element => {
-    const selected = useAppSelector((state) => state.selected.value)
-    const dispatch = useAppDispatch()
-    
-    const handleLinkClick = (linkName:string) => {
-        dispatch(setSelected(linkName))
-    }
+const NavLink = ({ link }: NavLinkProps): JSX.Element => {
+	const selected = useAppSelector((state) => state.selected.nav);
+	const dispatch = useAppDispatch();
 
-const navLinkClasses = selected == link.title ? "scale-105 text-lightPrimary" : "scale-90 text-lightSecIcon"
+	const handleLinkClick = (linkName: string) => {
+		dispatch(setSelectedNav(linkName));
+	};
 
-  return (
+	const navLinkClasses =
+		selected == link.title
+			? "scale-105 text-lightPrimary"
+			: "scale-90 text-lightSecIcon";
+
+	return (
 		<li
 			className={`items-center justify-center text-3xl duration-200 ease-in-out hover:cursor-pointer ${navLinkClasses}`}
 			onClick={() => handleLinkClick(link.title)}>
@@ -33,7 +36,7 @@ const navLinkClasses = selected == link.title ? "scale-105 text-lightPrimary" : 
 				<span className={`hidden`}>{link.title}</span>
 			</Link>
 		</li>
-  );
-}
+	);
+};
 
-export default NavLink
+export default NavLink;

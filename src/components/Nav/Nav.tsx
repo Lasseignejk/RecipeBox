@@ -1,11 +1,5 @@
 import { ReactNode } from "react";
-import {
-	FaUser,
-	FaCalendarAlt,
-	FaBook,
-	FaClipboardList,
-	FaUserFriends,
-} from "react-icons/fa";
+import { FaUser, FaCalendarAlt, FaBook, FaClipboardList } from "react-icons/fa";
 import NavLink from "./NavLink";
 
 interface LinksInterface {

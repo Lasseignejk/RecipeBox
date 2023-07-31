@@ -5,7 +5,6 @@ import {
 	incrementCounter,
 	updateCurrentWeek,
 } from "../reducers/TodaySlice";
-import { expect, it, describe } from "vitest";
 
 interface MonthsData {
 	[key: string]: string;

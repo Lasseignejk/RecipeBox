@@ -11,6 +11,7 @@ interface ButtonProps {
 	right?: string;
 	rounded?: boolean;
 	style?: string;
+	extraClasses?: string;
 }
 
 const Button = ({
@@ -24,6 +25,7 @@ const Button = ({
 	right,
 	rounded,
 	style,
+	extraClasses,
 }: ButtonProps) => {
 	const outlineClasses = outline
 		? "border-[1px] border-lightOutline px-4 text-sm rounded-xl hover:scale-105 duration-200 ease-in-out"
@@ -42,7 +44,7 @@ const Button = ({
 	return (
 		<button
 			onClick={() => passedFunction()}
-			className={`text-lightPrimary ${outlineClasses} ${absoluteClasses} ${iconClasses} ${top} ${right} ${color} ${roundedClasses} ${defaultClasses} ${invertedClasses}`}>
+			className={`text-lightPrimary ${outlineClasses} ${absoluteClasses} ${iconClasses} ${top} ${right} ${color} ${roundedClasses} ${defaultClasses} ${invertedClasses} ${extraClasses}`}>
 			{text ? text : icon}
 		</button>
 	);

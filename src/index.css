@@ -28,13 +28,20 @@ body {
 	color: var(--lightPrimText);
 }
 
+.recipe_card_view_more {
+	transition-duration: 200ms;
+	transition-timing-function: ease-in-out;
+	rotate: 180deg;
+}
+
 .recipe_card_horizontal {
 	display: grid;
 	grid-template-areas:
 		"img title title title"
 		"img time-prep time-cook time-total"
 		"tags tags tags tags"
-		"buttons buttons buttons buttons";
+		"buttons buttons buttons buttons"
+		"ingredients ingredients ingredients ingredients";
 	grid-template-columns: 3.5rem 1fr 1fr 1fr;
 }
 
@@ -45,7 +52,8 @@ body {
 		"title title title"
 		"time-prep time-cook time-total"
 		"tags tags tags"
-		"buttons buttons buttons";
+		"buttons buttons buttons"
+		"ingredients ingredients ingredients";
 	place-items: center;
 }
 
@@ -75,4 +83,8 @@ body {
 
 .recipe_add_buttons {
 	grid-area: buttons;
+}
+
+.recipe_ingredients {
+	grid-area: ingredients;
 }

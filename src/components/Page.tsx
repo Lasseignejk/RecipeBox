@@ -48,7 +48,7 @@ const Page = ({ title }: PageProps): JSX.Element => {
 			highlight: false,
 		},
 	];
-	const selected = useAppSelector((state) => state.selected.value);
+	const selected = useAppSelector((state) => state.selected.nav);
 	return (
 		<div className={`pb-20`}>
 			{selected == "Plan" && (

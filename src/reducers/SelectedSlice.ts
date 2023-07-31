@@ -2,22 +2,27 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 interface SelectedInitialState {
-	value: string;
+	nav: string;
+	recipe: string;
 }
 
 const initialState: SelectedInitialState = {
-	value: "Plan",
+	nav: "Plan",
+	recipe: "",
 };
 
 export const selectedSlice = createSlice({
 	name: "selected",
 	initialState,
 	reducers: {
-		setSelected: (state, action: PayloadAction<string>) => {
-			state.value = action.payload;
+		setSelectedNav: (state, action: PayloadAction<string>) => {
+			state.nav = action.payload;
+		},
+		setSelectedRecipe: (state, action: PayloadAction<string>) => {
+			state.recipe = action.payload;
 		},
 	},
 });
 
-export const { setSelected } = selectedSlice.actions;
+export const { setSelectedNav, setSelectedRecipe } = selectedSlice.actions;
 export default selectedSlice.reducer;

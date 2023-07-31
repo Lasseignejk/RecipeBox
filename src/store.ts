@@ -1,13 +1,15 @@
-import {configureStore} from "@reduxjs/toolkit"
-import selectedReducer from "./reducers/SelectedSlice"
+import { configureStore } from "@reduxjs/toolkit";
+import selectedReducer from "./reducers/SelectedSlice";
 import todayReducer from "./reducers/TodaySlice";
-import {useDispatch} from "react-redux"
+import showMoreReducer from "./reducers/showMoreSlice";
+import { useDispatch } from "react-redux";
 
 export const store = configureStore({
-    reducer: {
-        selected: selectedReducer,
-        today: todayReducer
-    }
+	reducer: {
+		selected: selectedReducer,
+		today: todayReducer,
+		showMore: showMoreReducer,
+	},
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

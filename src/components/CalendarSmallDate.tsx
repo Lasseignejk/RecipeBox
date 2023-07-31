@@ -1,5 +1,4 @@
 import { updateSelectedDay } from "../reducers/TodaySlice";
-import { getSunday } from "../util/calendarFunctions";
 import { useAppDispatch, useAppSelector } from "../util/hooks";
 interface CalendarProps {
 	date: {
