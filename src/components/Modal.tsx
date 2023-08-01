@@ -11,6 +11,8 @@ interface FieldsData {
 
 interface ModalProps {
 	form: boolean;
+	table: boolean;
+	headers?: string[];
 	fields?: FieldsData[];
 	text?: string;
 	title?: string;
@@ -26,6 +28,8 @@ interface formStateVariableProps {
 
 const Modal = ({
 	form,
+	table,
+	headers,
 	fields,
 	text,
 	title,
@@ -56,6 +60,8 @@ const Modal = ({
 						fields={fields}
 						formStateFunction={formStateFunction}
 						formStateVariable={formStateVariable}
+						table={table}
+						headers={headers}
 					/>
 				)}
 				{text}

@@ -8,7 +8,8 @@ import Button from "./Button";
 import RecipeContainer from "./Recipe/RecipeContainer";
 import SearchBar from "./Search/SearchBar";
 import Modal from "./Modal";
-import { newRecipeFields } from "../util/data";
+import { newRecipeFields, newRecipeHeaders } from "../util/data";
+import Table from "./Table/Table";
 
 interface PageProps {
 	title: string;
@@ -90,6 +91,8 @@ const Page = ({ title }: PageProps): JSX.Element => {
 					{openNewRecipeModal && (
 						<Modal
 							form={true}
+							table={true}
+							headers={newRecipeHeaders}
 							fields={newRecipeFields}
 							title={"New Recipe"}
 							openStateFunction={setOpenNewRecipeModal}

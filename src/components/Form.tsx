@@ -1,4 +1,6 @@
+import { newRecipeIngredientsFields } from "../util/data";
 import Input from "./Input";
+import Table from "./Table/Table";
 
 interface formStateVariableProps {
 	[key: string]: string;
@@ -15,6 +17,8 @@ interface FormProps {
 	fields: FieldsData[];
 	formStateFunction: (obj: formStateVariableProps) => void;
 	formStateVariable: formStateVariableProps;
+	table?: boolean;
+	headers?: string[];
 }
 
 interface Event {
@@ -23,6 +27,8 @@ interface Event {
 
 const Form = ({
 	fields,
+	table,
+	headers,
 	formStateFunction,
 	formStateVariable,
 }: FormProps): JSX.Element => {
@@ -32,6 +38,7 @@ const Form = ({
 			[e.target.name]: e.target.value,
 		});
 	};
+
 	return (
 		<form>
 			{fields.map((field: FieldsData, index: number) => (
@@ -42,6 +49,7 @@ const Form = ({
 					formStateVariable={formStateVariable}
 				/>
 			))}
+			{table && headers && <Table headers={headers} />}
 		</form>
 	);
 };

@@ -15,7 +15,7 @@ interface InputProps {
 interface FieldsData {
 	type: string;
 	label: boolean;
-	labelText: string;
+	labelText?: string;
 	value: string;
 }
 
@@ -41,6 +41,19 @@ const Input = ({
 						name={field.value}
 					/>
 				</div>
+			)}
+			{!field.label && (
+				<input
+					type={field.type}
+					id={field.value}
+					onChange={onChangeFunction}
+					value={
+						formStateVariable[field.value]
+							? formStateVariable[field.value]
+							: ""
+					}
+					name={field.value}
+				/>
 			)}
 		</>
 	);

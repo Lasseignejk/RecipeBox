@@ -125,8 +125,8 @@ const RecipeCard = ({ data, column }: RecipeCardProps) => {
 			)}
 			<div
 				className={`recipe_ingredients flex flex-col gap-1 pt-2 ${ingredientsClasses}`}>
-				{data.ingredients.map((ingredient) => (
-					<RecipeIngredient data={ingredient} />
+				{data.ingredients.map((ingredient, index) => (
+					<RecipeIngredient data={ingredient} key={index} />
 				))}
 			</div>
 
