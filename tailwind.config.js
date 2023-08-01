@@ -19,6 +19,7 @@ module.exports = {
 			lightMain: "#edc148",
 			lightPrimCon: "#ffdf93",
 			lightPrimText: "#241a00",
+			lightModalBack: "rgba(176, 170, 162, .8)",
 		},
 		extend: {},
 	},

@@ -44,7 +44,6 @@ interface FormattedData {
 
 const RecipeContainer = ({ column }: RecipeContainerProps): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const allRecipes = useAppSelector((state) => state.showMore.showRecipe);
 	const columnClasses: string = column
 		? "flex flex-col gap-5"
 		: "flex flex-wrap gap-5 justify-center";

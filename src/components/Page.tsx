@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { useAppSelector } from "../util/hooks";
 import PlanCalendar from "./PlanCalendar";
 import { TbFridge } from "react-icons/tb";
@@ -7,6 +7,8 @@ import PageTitle from "./PageTitle";
 import Button from "./Button";
 import RecipeContainer from "./Recipe/RecipeContainer";
 import SearchBar from "./Search/SearchBar";
+import Modal from "./Modal";
+import { newRecipeFields } from "../util/data";
 
 interface PageProps {
 	title: string;
@@ -20,6 +22,8 @@ interface CardsProps {
 }
 
 const Page = ({ title }: PageProps): JSX.Element => {
+	const [openNewRecipeModal, setOpenNewRecipeModal] =
+		useState<boolean>(false);
 	const cards: CardsProps[] = [
 		{
 			title: "Prep",
@@ -66,13 +70,25 @@ const Page = ({ title }: PageProps): JSX.Element => {
 					<PageTitle title={title} />
 					<Button
 						text={"New Recipe"}
-						passedFunction={() => console.log("clicked")}
+						passedFunction={() =>
+							setOpenNewRecipeModal(!openNewRecipeModal)
+						}
 						outline={true}
 						absolute={true}
 						top="top-5"
 						right="right-3"
 					/>
 					<SearchBar />
+					{openNewRecipeModal && (
+						<Modal
+							form={true}
+							fields={newRecipeFields}
+							title={"New Recipe"}
+							stateFunction={setOpenNewRecipeModal}
+							stateVariable={openNewRecipeModal}
+						/>
+					)}
+
 					<RecipeContainer column={true} />
 				</div>
 			)}
