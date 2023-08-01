@@ -14,8 +14,14 @@ interface ModalProps {
 	fields?: FieldsData[];
 	text?: string;
 	title?: string;
-	stateFunction?: (bool: boolean) => void;
-	stateVariable?: boolean;
+	openStateFunction?: (bool: boolean) => void;
+	openStateVariable?: boolean;
+	formStateFunction?: (obj: formStateVariableProps) => void;
+	formStateVariable?: formStateVariableProps;
+}
+
+interface formStateVariableProps {
+	[key: string]: string;
 }
 
 const Modal = ({
@@ -23,16 +29,20 @@ const Modal = ({
 	fields,
 	text,
 	title,
-	stateFunction,
-	stateVariable,
+	openStateFunction,
+	openStateVariable,
+	formStateFunction,
+	formStateVariable,
 }: ModalProps): JSX.Element => {
 	return (
 		<div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center p-5 py-10 border-2 bg-lightModalBack z-10">
 			<div className="relative flex flex-col items-center bg-lightSurfCon w-[90%] h-full rounded-xl px-5 gap-3 overflow-auto py-5">
-				{stateFunction && (
+				{openStateFunction && (
 					<Button
 						icon={<FaTimes />}
-						passedFunction={() => stateFunction(!stateVariable)}
+						passedFunction={() =>
+							openStateFunction(!openStateVariable)
+						}
 						outline={false}
 						absolute={true}
 						top={"top-[10px]"}
@@ -41,7 +51,13 @@ const Modal = ({
 				)}
 
 				{title && <h1>{title}</h1>}
-				{form && fields && <Form fields={fields} />}
+				{form && fields && formStateFunction && formStateVariable && (
+					<Form
+						fields={fields}
+						formStateFunction={formStateFunction}
+						formStateVariable={formStateVariable}
+					/>
+				)}
 				{text}
 			</div>
 		</div>

@@ -21,9 +21,17 @@ interface CardsProps {
 	highlight: boolean;
 }
 
+interface formStateVariableProps {
+	[key: string]: string;
+}
+
 const Page = ({ title }: PageProps): JSX.Element => {
 	const [openNewRecipeModal, setOpenNewRecipeModal] =
 		useState<boolean>(false);
+	const [newRecipeForm, setNewRecipeForm] = useState<formStateVariableProps>(
+		{}
+	);
+
 	const cards: CardsProps[] = [
 		{
 			title: "Prep",
@@ -84,8 +92,10 @@ const Page = ({ title }: PageProps): JSX.Element => {
 							form={true}
 							fields={newRecipeFields}
 							title={"New Recipe"}
-							stateFunction={setOpenNewRecipeModal}
-							stateVariable={openNewRecipeModal}
+							openStateFunction={setOpenNewRecipeModal}
+							openStateVariable={openNewRecipeModal}
+							formStateFunction={setNewRecipeForm}
+							formStateVariable={newRecipeForm}
 						/>
 					)}
 
