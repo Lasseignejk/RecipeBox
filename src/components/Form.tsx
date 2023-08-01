@@ -1,9 +1,22 @@
-import React from "react";
+import Input from "./Input";
 
-const Form = ({ type }) => {
+interface FieldsData {
+	type: string,
+	label: boolean,
+	labelText: string,
+	value: string
+}
+
+interface FormProps {
+	fields: FieldsData[]
+}
+
+const Form = ({ fields }:FormProps):JSX.Element => {
 	return (
 		<form action="">
-			<input type="text" />
+			{fields.map((field:FieldsData, index:number) => (
+				<Input field={field} key={index}/>
+			))}
 		</form>
 	);
 };
