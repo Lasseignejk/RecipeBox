@@ -49,7 +49,13 @@ const Form = ({
 					formStateVariable={formStateVariable}
 				/>
 			))}
-			{table && headers && <Table headers={headers} />}
+			{table && headers && (
+				<Table
+					headers={headers}
+					onChangeFunction={(e: Event) => setFormState(e)}
+					formStateVariable={formStateVariable}
+				/>
+			)}
 		</form>
 	);
 };
