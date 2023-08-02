@@ -1,14 +1,7 @@
 import { FaTimes } from "react-icons/fa";
 import Button from "./Button";
 import Form from "./Form";
-
-interface FieldsData {
-	id: number;
-	type: string;
-	label: boolean;
-	labelText: string;
-	value: string;
-}
+import { formStateVariableProps, FieldsData } from "../util/interfaces";
 
 interface ModalProps {
 	form: boolean;
@@ -21,10 +14,6 @@ interface ModalProps {
 	openStateVariable?: boolean;
 	formStateFunction?: (obj: formStateVariableProps) => void;
 	formStateVariable?: formStateVariableProps;
-}
-
-interface formStateVariableProps {
-	[key: string]: string;
 }
 
 const Modal = ({

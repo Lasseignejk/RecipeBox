@@ -1,8 +1,4 @@
-import { useState } from "react";
-
-interface formStateVariableProps {
-	[key: string]: string;
-}
+import { formStateVariableProps, FieldsData } from "../util/interfaces";
 
 interface Event {
 	target: HTMLInputElement;
@@ -16,42 +12,11 @@ interface InputProps {
 	formStateFunction?: (obj: formStateVariableProps) => void;
 }
 
-interface FieldsData {
-	id: number;
-	type: string;
-	label: boolean;
-	labelText?: string;
-	value: string;
-}
-
-interface IngredientsState {
-	[key: string]: string;
-}
-
 const Input = ({
 	field,
 	onChangeFunction,
 	formStateVariable,
-	table,
-	formStateFunction,
 }: InputProps): JSX.Element => {
-	const [allIngredients, setAllIngredients] = useState<IngredientsState[]>(
-		[]
-	);
-
-	const [oneIngredient, setOneIngredient] = useState<object>({});
-
-	const setOneIngredientTableState = (e: Event) => {
-		setOneIngredient({
-			...oneIngredient,
-			[e.target.name]: e.target.value,
-		});
-	};
-
-	const setIngredientsTableState = () => {
-		setAllIngredients([...allIngredients, { ...oneIngredient }]);
-	};
-
 	return (
 		<>
 			{field.label && formStateVariable && (
@@ -62,8 +27,8 @@ const Input = ({
 						id={field.value}
 						onChange={onChangeFunction}
 						value={
-							formStateVariable[field.value]
-								? formStateVariable[field.value]
+							formStateVariable[field.value] !== undefined
+								? (formStateVariable[field.value] as string)
 								: ""
 						}
 						name={field.value}
@@ -83,7 +48,7 @@ const Input = ({
 					name={field.value}
 				/>
 			)} */}
-			{table && (
+			{/* {table && (
 				<input
 					type={field.type}
 					id={field.value}
@@ -95,7 +60,7 @@ const Input = ({
 					}
 					name={field.value}
 				/>
-			)}
+			)} */}
 		</>
 	);
 };

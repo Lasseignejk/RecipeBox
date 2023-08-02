@@ -1,19 +1,44 @@
 import { useState } from "react";
 import TableRow from "./TableRow";
+import { formStateVariableProps } from "../../util/interfaces";
 
 interface TableHeaders {
 	headers: string[];
+	formStateFunction: (obj: formStateVariableProps) => void;
+	formStateVariable: formStateVariableProps;
 }
 
-const TableTake2 = ({ headers }: TableHeaders) => {
-	const [fields, setFields] = useState([1, 1, 1, 1]);
+const TableTake2 = ({
+	headers,
+	formStateFunction,
+	formStateVariable,
+}: TableHeaders) => {
+	const [rows, setRows] = useState([0, 1, 2, 3]);
 
 	const [formData, setFormData] = useState([
 		{
-			ingredient_name: null,
-			ingredient_amount: null,
-			ingredient_measurement: null,
-			ingredient_directions: null,
+			ingredient_name: "",
+			ingredient_amount: "",
+			ingredient_measurement: "",
+			ingredient_directions: "",
+		},
+		{
+			ingredient_name: "",
+			ingredient_amount: "",
+			ingredient_measurement: "",
+			ingredient_directions: "",
+		},
+		{
+			ingredient_name: "",
+			ingredient_amount: "",
+			ingredient_measurement: "",
+			ingredient_directions: "",
+		},
+		{
+			ingredient_name: "",
+			ingredient_amount: "",
+			ingredient_measurement: "",
+			ingredient_directions: "",
 		},
 	]);
 
@@ -23,19 +48,28 @@ const TableTake2 = ({ headers }: TableHeaders) => {
 		setFormData(updatedFormData);
 	};
 
-	console.log(formData);
+	const handleSubmit = () => {
+		let filteredIngredients = formData.filter(
+			(ingredient) => ingredient.ingredient_name != ""
+		);
+		formStateFunction({
+			...formStateVariable,
+			ingredients: filteredIngredients,
+		});
+		console.log(formStateVariable);
+	};
 
 	const handleAddRow = () => {
 		setFormData([
 			...formData,
 			{
-				ingredient_name: null,
-				ingredient_amount: null,
-				ingredient_measurement: null,
-				ingredient_directions: null,
+				ingredient_name: "",
+				ingredient_amount: "",
+				ingredient_measurement: "",
+				ingredient_directions: "",
 			},
 		]);
-		setFields([...fields, 1]);
+		setRows([...rows, rows.length + 1]);
 	};
 	return (
 		<div>
@@ -48,12 +82,12 @@ const TableTake2 = ({ headers }: TableHeaders) => {
 					</tr>
 				</thead>
 				<tbody>
-					{fields.map((field, index) => (
+					{rows.map((row) => (
 						<TableRow
-							key={index}
-							field={field}
-							index={index}
+							key={row}
+							index={row}
 							onInputChange={handleInputChange}
+							formData={formData}
 						/>
 					))}
 				</tbody>

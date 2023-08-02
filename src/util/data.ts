@@ -1,10 +1,4 @@
-interface FieldsData {
-	id: number;
-	type: string;
-	label: boolean;
-	labelText?: string;
-	value: string;
-}
+import { FieldsData } from "./interfaces";
 
 export const newRecipeFields: FieldsData[] = [
 	{

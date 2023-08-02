@@ -52,6 +52,30 @@ Made with the Material Theme Builder Figma plugin from Google
 
 ## Learned:
 
+<strong>8/2/23</strong> -- Figured out how to make a table component where each row has its own state, then is combined into the larger state object when the user submits. I also further fixed the TS error I was running into on 7/31.
+
+One of the fixes for that error was to go into the interface and have something like this:
+
+    formStateVariableProps {
+        [key:string]: string
+    }
+
+That way, I can index using strings and TS stops yelling. But the interfaces I need are more complicated -- I don't just have strings, I also have arrays and objects. I fixed this by adding those to the line above, like this:
+
+    formStateVariableProps {
+        [key:string]: string | undefined | string[] | IngredientsProps[]
+    }
+
+But this gave me ANOTHER error, this time in the `Input` component. On my input fields, I have the value set to `formStateVarialbe[field.value]`, but the `value` attribute can't accept `undefined`, or arrays of strings, or the other things that I put in that line above. To fix that, I used type assertion:
+
+    value={
+            formStateVariable[field.value] !== undefined
+                ? (formStateVariable[field.value] as string)
+                : ""
+            }
+
+That tells it the thing it will accept WILL be a string. Of course if it's not, it'll still create an error.
+
 <strong>8/1/23</strong> -- Remembered how to type events and how to set a controlled form in TS. Figured out how to do it with reusable components too!
 
 <strong>7/31/23</strong> -- Fixed a TS error on the RecipeCard component:

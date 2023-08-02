@@ -9,7 +9,7 @@ import RecipeContainer from "./Recipe/RecipeContainer";
 import SearchBar from "./Search/SearchBar";
 import Modal from "./Modal";
 import { newRecipeFields, newRecipeHeaders } from "../util/data";
-import Table from "./Table/Table";
+import { formStateVariableProps } from "../util/interfaces";
 
 interface PageProps {
 	title: string;
@@ -22,16 +22,21 @@ interface CardsProps {
 	highlight: boolean;
 }
 
-interface formStateVariableProps {
-	[key: string]: string;
-}
-
 const Page = ({ title }: PageProps): JSX.Element => {
 	const [openNewRecipeModal, setOpenNewRecipeModal] =
 		useState<boolean>(false);
-	const [newRecipeForm, setNewRecipeForm] = useState<formStateVariableProps>(
-		{}
-	);
+
+	const [newRecipeForm, setNewRecipeForm] = useState<formStateVariableProps>({
+		recipe_name: "",
+		prep_time: "",
+		cook_time: "",
+		total_time: "",
+		servings: "",
+		category: "",
+		source: "",
+		tags: [],
+		ingredients: [],
+	});
 
 	const cards: CardsProps[] = [
 		{

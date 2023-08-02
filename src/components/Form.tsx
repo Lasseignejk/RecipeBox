@@ -1,17 +1,6 @@
 import Input from "./Input";
-import Table from "./Table/Table";
 import TableTake2 from "./Table/TableTake2";
-
-interface formStateVariableProps {
-	[key: string]: string;
-}
-interface FieldsData {
-	id: number;
-	type: string;
-	label: boolean;
-	labelText: string;
-	value: string;
-}
+import { formStateVariableProps, FieldsData } from "../util/interfaces";
 
 interface FormProps {
 	fields: FieldsData[];
@@ -54,10 +43,13 @@ const Form = ({
 				// <Table
 				// 	headers={headers}
 				// 	onChangeFunction={(e: Event) => setFormState(e)}
-				// 	formStateVariable={formStateVariable}
-				// 	formStateFunction={formStateFunction}
+
 				// />
-				<TableTake2 headers={headers} />
+				<TableTake2
+					headers={headers}
+					formStateVariable={formStateVariable}
+					formStateFunction={formStateFunction}
+				/>
 			)}
 		</form>
 	);

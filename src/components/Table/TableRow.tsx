@@ -1,5 +1,22 @@
-const TableRow = ({ field, index, onInputChange }) => {
-	const handleInputChange = (e) => {
+interface FormDataProps {
+	ingredient_name: string;
+	ingredient_amount: string;
+	ingredient_measurement: string;
+	ingredient_directions: string;
+}
+
+interface TableRowProps {
+	index: number;
+	onInputChange: (index: number, name: string, value: string) => void;
+	formData: FormDataProps[];
+}
+
+interface Event {
+	target: HTMLInputElement;
+}
+
+const TableRow = ({ index, onInputChange, formData }: TableRowProps) => {
+	const handleInputChange = (e: Event) => {
 		const { name, value } = e.target;
 		onInputChange(index, name, value);
 	};
@@ -10,9 +27,9 @@ const TableRow = ({ field, index, onInputChange }) => {
 					type="text"
 					name="ingredient_amount"
 					value={
-						field.ingredient_amount != null
-							? ""
-							: field.ingredient_amount
+						formData[index]?.ingredient_amount != ""
+							? formData[index]?.ingredient_amount
+							: ""
 					}
 					onChange={handleInputChange}
 				/>
@@ -22,9 +39,9 @@ const TableRow = ({ field, index, onInputChange }) => {
 					type="text"
 					name="ingredient_measurement"
 					value={
-						field.ingredient_measurement != null
-							? ""
-							: field.ingredient_measurement
+						formData[index]?.ingredient_measurement != ""
+							? formData[index]?.ingredient_measurement
+							: ""
 					}
 					onChange={handleInputChange}
 				/>
@@ -34,9 +51,9 @@ const TableRow = ({ field, index, onInputChange }) => {
 					type="text"
 					name="ingredient_name"
 					value={
-						field.ingredient_name != null
-							? ""
-							: field.ingredient_name
+						formData[index]?.ingredient_name != ""
+							? formData[index]?.ingredient_name
+							: ""
 					}
 					onChange={handleInputChange}
 				/>
@@ -46,9 +63,9 @@ const TableRow = ({ field, index, onInputChange }) => {
 					type="text"
 					name="ingredient_directions"
 					value={
-						field.ingredient_directions != null
-							? ""
-							: field.ingredient_directions
+						formData[index]?.ingredient_directions != ""
+							? formData[index]?.ingredient_directions
+							: ""
 					}
 					onChange={handleInputChange}
 				/>
