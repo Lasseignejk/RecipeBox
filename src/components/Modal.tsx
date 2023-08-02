@@ -3,6 +3,7 @@ import Button from "./Button";
 import Form from "./Form";
 
 interface FieldsData {
+	id: number;
 	type: string;
 	label: boolean;
 	labelText: string;

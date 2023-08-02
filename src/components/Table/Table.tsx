@@ -11,13 +11,15 @@ interface Event {
 interface TableHeaders {
 	headers: string[];
 	onChangeFunction?: (e: Event) => void;
-	formStateVariable: formStateVariableProps;
+	formStateVariable?: formStateVariableProps;
+	formStateFunction?: (obj: formStateVariableProps) => void;
 }
 
 const Table = ({
 	headers,
 	onChangeFunction,
 	formStateVariable,
+	formStateFunction,
 }: TableHeaders) => {
 	const renderRows = (num: number) => {
 		const rows = [];
@@ -35,21 +37,25 @@ const Table = ({
 		const cols = [];
 		const fields = [
 			{
+				id: 1,
 				type: "text",
 				label: false,
 				value: "name",
 			},
 			{
+				id: 2,
 				type: "text",
 				label: false,
 				value: "amount",
 			},
 			{
+				id: 3,
 				type: "text",
 				label: false,
 				value: "measurement",
 			},
 			{
+				id: 4,
 				type: "text",
 				label: false,
 				value: "total",
@@ -61,8 +67,8 @@ const Table = ({
 				<td key={i}>
 					<Input
 						field={fields[i]}
-						onChangeFunction={onChangeFunction}
-						formStateVariable={formStateVariable}
+						table={true}
+						formStateFunction={formStateFunction}
 					/>
 				</td>
 			);

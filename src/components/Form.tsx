@@ -1,12 +1,12 @@
-import { newRecipeIngredientsFields } from "../util/data";
 import Input from "./Input";
 import Table from "./Table/Table";
+import TableTake2 from "./Table/TableTake2";
 
 interface formStateVariableProps {
 	[key: string]: string;
 }
-
 interface FieldsData {
+	id: number;
 	type: string;
 	label: boolean;
 	labelText: string;
@@ -47,14 +47,17 @@ const Form = ({
 					key={index}
 					onChangeFunction={(e: Event) => setFormState(e)}
 					formStateVariable={formStateVariable}
+					formStateFunction={formStateFunction}
 				/>
 			))}
 			{table && headers && (
-				<Table
-					headers={headers}
-					onChangeFunction={(e: Event) => setFormState(e)}
-					formStateVariable={formStateVariable}
-				/>
+				// <Table
+				// 	headers={headers}
+				// 	onChangeFunction={(e: Event) => setFormState(e)}
+				// 	formStateVariable={formStateVariable}
+				// 	formStateFunction={formStateFunction}
+				// />
+				<TableTake2 headers={headers} />
 			)}
 		</form>
 	);
