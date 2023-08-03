@@ -48,7 +48,7 @@ const TableTake2 = ({
 		setFormData(updatedFormData);
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		let filteredIngredients = formData.filter(
 			(ingredient) => ingredient.ingredient_name != ""
 		);
@@ -57,6 +57,18 @@ const TableTake2 = ({
 			ingredients: filteredIngredients,
 		});
 		console.log(formStateVariable);
+
+		const response = await fetch(
+			import.meta.env.VITE_BACKEND + "/recipe/new",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(formStateVariable),
+			}
+		);
+		console.log(response);
 	};
 
 	const handleAddRow = () => {
