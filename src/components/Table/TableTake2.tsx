@@ -6,15 +6,17 @@ interface TableHeaders {
 	headers: string[];
 	formStateFunction: (obj: formStateVariableProps) => void;
 	formStateVariable: formStateVariableProps;
+	rowsVariable: number[];
+	rowsFunction: (array: number[]) => void;
 }
 
 const TableTake2 = ({
 	headers,
 	formStateFunction,
 	formStateVariable,
+	rowsVariable,
+	rowsFunction,
 }: TableHeaders) => {
-	const [rows, setRows] = useState([0, 1, 2, 3]);
-
 	const [formData, setFormData] = useState([
 		{
 			ingredient_name: "",
@@ -81,7 +83,7 @@ const TableTake2 = ({
 				ingredient_directions: "",
 			},
 		]);
-		setRows([...rows, rows.length + 1]);
+		rowsFunction([...rowsVariable, rowsVariable.length + 1]);
 	};
 	return (
 		<div>
@@ -94,7 +96,7 @@ const TableTake2 = ({
 					</tr>
 				</thead>
 				<tbody>
-					{rows.map((row) => (
+					{rowsVariable.map((row) => (
 						<TableRow
 							key={row}
 							index={row}

@@ -52,6 +52,7 @@ const Modal = ({
 						formStateVariable={formStateVariable}
 						table={table}
 						headers={headers}
+						textarea={true}
 					/>
 				)}
 				{text}

@@ -23,7 +23,7 @@ const initialState: SelectedInitialState = {
 	counter: 0,
 };
 
-export const selectedSlice = createSlice({
+export const todaySlice = createSlice({
 	name: "today",
 	initialState,
 	reducers: {
@@ -38,12 +38,6 @@ export const selectedSlice = createSlice({
 		},
 		updateSelectedDay: (state, action: PayloadAction<string>) => {
 			state.selectedDay = new Date(action.payload).toDateString();
-			// const indexToUpdate = state.currentWeek.findIndex(
-			// 	(item) => item.date === action.payload
-			// );
-			// if (indexToUpdate !== -1) {
-			// 	state.currentWeek[indexToUpdate].selected = true;
-			// }
 		},
 	},
 });
@@ -53,5 +47,5 @@ export const {
 	decrementCounter,
 	updateCurrentWeek,
 	updateSelectedDay,
-} = selectedSlice.actions;
-export default selectedSlice.reducer;
+} = todaySlice.actions;
+export default todaySlice.reducer;

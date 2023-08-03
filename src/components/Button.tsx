@@ -43,6 +43,7 @@ const Button = ({
 	const roundedClasses = rounded ? "px-4 py-1 rounded-full" : "";
 	return (
 		<button
+			type="button"
 			onClick={() => passedFunction()}
 			className={`text-lightPrimary ${outlineClasses} ${absoluteClasses} ${iconClasses} ${top} ${right} ${color} ${roundedClasses} ${defaultClasses} ${invertedClasses} ${extraClasses}`}>
 			{text ? text : icon}
