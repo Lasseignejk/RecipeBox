@@ -2,6 +2,7 @@ import { FaTimes } from "react-icons/fa";
 import Button from "./Button";
 import Form from "./Form";
 import { formStateVariableProps, FieldsData } from "../util/interfaces";
+import FormikForm from "./FormikForm";
 
 interface ModalProps {
 	form: boolean;
@@ -46,14 +47,15 @@ const Modal = ({
 
 				{title && <h1>{title}</h1>}
 				{form && fields && formStateFunction && formStateVariable && (
-					<Form
-						fields={fields}
-						formStateFunction={formStateFunction}
-						formStateVariable={formStateVariable}
-						table={table}
-						headers={headers}
-						textarea={true}
-					/>
+					// <Form
+					// 	fields={fields}
+					// 	formStateFunction={formStateFunction}
+					// 	formStateVariable={formStateVariable}
+					// 	table={table}
+					// 	headers={headers}
+					// 	textarea={true}
+					// />
+					<FormikForm />
 				)}
 				{text}
 			</div>

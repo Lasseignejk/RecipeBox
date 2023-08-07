@@ -51,9 +51,11 @@ const TableTake2 = ({
 	};
 
 	const handleSubmit = async () => {
+		console.log(formData);
 		let filteredIngredients = formData.filter(
 			(ingredient) => ingredient.ingredient_name != ""
 		);
+		console.log(filteredIngredients);
 		formStateFunction({
 			...formStateVariable,
 			ingredients: filteredIngredients,

@@ -3,7 +3,6 @@ import TableTake2 from "./Table/TableTake2";
 import { formStateVariableProps, FieldsData } from "../util/interfaces";
 import Textarea from "./Textarea";
 import { useState } from "react";
-import Button from "./Button";
 
 interface FormProps {
 	fields: FieldsData[];
@@ -61,7 +60,6 @@ const Form = ({
 					rowsStateFunction={setTextareaRows}
 				/>
 			)}
-			{/* <Button passedFunction={} /> */}
 		</form>
 	);
 };
