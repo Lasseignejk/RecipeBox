@@ -1,9 +1,10 @@
 import { Formik, Form, FieldArray, Field } from "formik";
 import * as Yup from "yup";
 import NewInput from "./NewInput";
+import { FaTrash } from "react-icons/fa";
 const FormikForm = () => {
 	return (
-		<div className="border-2">
+		<div className="">
 			<Formik
 				initialValues={{
 					recipe_name: "",
@@ -86,8 +87,8 @@ const FormikForm = () => {
 										const { values } = form;
 										const { ingredients } = values;
 										return (
-											<div>
-												<div className="flex justify-around w-[93%] border-2">
+											<div className="pt-[2px]">
+												<div className=" justify-around w-[96.3%] border-2 hidden md:flex">
 													<p>Amount</p>
 													<p>Measurement</p>
 													<p>Ingredient</p>
@@ -120,26 +121,31 @@ const FormikForm = () => {
 																placeholder="diced"
 															/>
 															<button
+																className="ml-3 text-lightError"
 																type="button"
 																onClick={() =>
 																	remove(
 																		index
 																	)
 																}>
-																Remove
+																<FaTrash />
 															</button>
 														</div>
 													)
 												)}
-												<button
-													type="button"
-													onClick={() =>
-														push({
-															ingredient_name: "",
-														})
-													}>
-													Add
-												</button>
+												<div className="flex justify-center pt-2">
+													<button
+														type="button"
+														onClick={() =>
+															push({
+																ingredient_name:
+																	"",
+															})
+														}
+														className="border-2 w-1/2 rounded-lg">
+														Add
+													</button>
+												</div>
 											</div>
 										);
 									}}

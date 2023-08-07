@@ -52,6 +52,8 @@ Made with the Material Theme Builder Figma plugin from Google
 
 ## Learned:
 
+<strong>8/7/23</strong> -- Used [this tutorial](https://www.youtube.com/watch?v=DYcqatriSNE) and the Formik docs to remake the new recipe form. Formik is a new library for me, and after the struggles of putting together the new recipe form from scratch, I'm excited to use it going forward.
+
 <strong>8/2/23</strong> -- Figured out how to make a table component where each row has its own state, then is combined into the larger state object when the user submits. I also further fixed the TS error I was running into on 7/31.
 
 One of the fixes for that error was to go into the interface and have something like this:
