@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import { useAppSelector } from "../util/hooks";
+import { useAppSelector, useAppDispatch } from "../util/hooks";
 import PlanCalendar from "./PlanCalendar";
 import { TbFridge } from "react-icons/tb";
 import PlanCard from "./PlanCard";
@@ -14,6 +14,7 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import Profile from "./Profile";
 import { useAuth0 } from "@auth0/auth0-react";
+import { updateUser } from "../reducers/UserSlice";
 
 interface PageProps {
 	title: string;
@@ -27,10 +28,14 @@ interface CardsProps {
 }
 
 const Page = ({ title }: PageProps): JSX.Element => {
+	const dispatch = useAppDispatch();
 	const [openNewRecipeModal, setOpenNewRecipeModal] =
 		useState<boolean>(false);
 
 	const { isLoading, error, isAuthenticated, user } = useAuth0();
+
+	const mongoUser = useAppSelector((state) => state.mongoUser.values);
+	console.log("mongoUser", mongoUser);
 
 	const [newRecipeForm, setNewRecipeForm] = useState<formStateVariableProps>({
 		recipe_name: "",
@@ -46,23 +51,28 @@ const Page = ({ title }: PageProps): JSX.Element => {
 
 	useEffect(() => {
 		if (isAuthenticated) {
-			console.log("useEffect", user);
 			const checkUser = async () => {
-				const response = await fetch(
-					import.meta.env.VITE_BACKEND + "/user/check",
-					{
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify(user),
-					}
-				);
-				console.log(response);
+				try {
+					const response = await fetch(
+						import.meta.env.VITE_BACKEND + "/user/check",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify(user),
+						}
+					);
+					const data = await response.json();
+
+					dispatch(updateUser(data));
+				} catch (error) {
+					console.log(error);
+				}
 			};
 			checkUser();
 		}
-	}, [isAuthenticated]);
+	}, [isAuthenticated, user]);
 
 	const cards: CardsProps[] = [
 		{

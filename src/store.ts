@@ -1,7 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import logger from "redux-logger";
 import selectedReducer from "./reducers/SelectedSlice";
 import todayReducer from "./reducers/TodaySlice";
 import showMoreReducer from "./reducers/showMoreSlice";
+import userReducer from "./reducers/UserSlice";
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
@@ -9,7 +11,9 @@ export const store = configureStore({
 		selected: selectedReducer,
 		today: todayReducer,
 		showMore: showMoreReducer,
+		mongoUser: userReducer,
 	},
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
