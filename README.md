@@ -4,11 +4,15 @@
 
 Basic:
 
--   Login using your Google account
--   Manually upload recipes (finished 8/8/23)
--   Organize your recipes into collections
--   Add tags to your recipes to help with organization
--   Add recipes to your weekly meal plan
+[x] Login using your Google account (added 8/8/23)
+
+[x] Manually upload recipes (finished 8/8/23)
+
+[ ] Organize your recipes into collections
+
+[ ] Add tags to your recipes to help with organization
+
+[ ] Add recipes to your weekly meal plan
 
 Intermediate:
 

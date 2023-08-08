@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useAppSelector } from "../util/hooks";
 import PlanCalendar from "./PlanCalendar";
 import { TbFridge } from "react-icons/tb";
@@ -10,6 +10,10 @@ import SearchBar from "./Search/SearchBar";
 import Modal from "./Modal";
 import { newRecipeFields, newRecipeHeaders } from "../util/data";
 import { formStateVariableProps } from "../util/interfaces";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
+import Profile from "./Profile";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface PageProps {
 	title: string;
@@ -26,6 +30,8 @@ const Page = ({ title }: PageProps): JSX.Element => {
 	const [openNewRecipeModal, setOpenNewRecipeModal] =
 		useState<boolean>(false);
 
+	const { isLoading, error, isAuthenticated, user } = useAuth0();
+
 	const [newRecipeForm, setNewRecipeForm] = useState<formStateVariableProps>({
 		recipe_name: "",
 		prep_time: "",
@@ -37,6 +43,26 @@ const Page = ({ title }: PageProps): JSX.Element => {
 		tags: [],
 		ingredients: [],
 	});
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			console.log("useEffect", user);
+			const checkUser = async () => {
+				const response = await fetch(
+					import.meta.env.VITE_BACKEND + "/user/check",
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(user),
+					}
+				);
+				console.log(response);
+			};
+			checkUser();
+		}
+	}, [isAuthenticated]);
 
 	const cards: CardsProps[] = [
 		{
@@ -118,6 +144,15 @@ const Page = ({ title }: PageProps): JSX.Element => {
 			{selected == "Account" && (
 				<div className={`p-3`}>
 					<PageTitle title={title} />
+					{error && <p>Authentication error</p>}
+					{!error && isLoading && <p>Loading...</p>}
+					{!error && !isLoading && (
+						<>
+							<LoginButton />
+							<LogoutButton />
+							<Profile />
+						</>
+					)}
 				</div>
 			)}
 		</div>
