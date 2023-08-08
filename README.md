@@ -5,7 +5,7 @@
 Basic:
 
 -   Login using your Google account
--   Manually upload recipes
+-   Manually upload recipes (finished 8/8/23)
 -   Organize your recipes into collections
 -   Add tags to your recipes to help with organization
 -   Add recipes to your weekly meal plan
@@ -31,8 +31,9 @@ Stretch:
 -   React
 -   Typescript
 -   Redux Toolkit
--   Vitest
--   React Testing Library
+-   Vitest (new)
+-   React Testing Library (new)
+-   Formik (new)
 -   TailwindCSS
 -   Auth0
 -   react-icons
@@ -51,6 +52,8 @@ Made with the Material Theme Builder Figma plugin from Google
 -   Error: #ba1a1a
 
 ## Learned:
+
+<strong>8/8/23</strong> -- Successfully hooked the form up to the database and figured out how to reset the form on submission by reading the Formik docs.
 
 <strong>8/7/23</strong> -- Used [this tutorial](https://www.youtube.com/watch?v=DYcqatriSNE) and the Formik docs to remake the new recipe form. Formik is a new library for me, and after the struggles of putting together the new recipe form from scratch, I'm excited to use it going forward.
 

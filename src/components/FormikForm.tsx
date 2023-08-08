@@ -1,10 +1,12 @@
-import { Formik, Form, FieldArray, Field } from "formik";
+import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import NewInput from "./NewInput";
-import { FaTrash } from "react-icons/fa";
+import { FaPlus, FaTrash } from "react-icons/fa";
+import Button from "./Button";
+
 const FormikForm = () => {
 	return (
-		<div className="">
+		<div className="md:w-3/4">
 			<Formik
 				initialValues={{
 					recipe_name: "",
@@ -33,11 +35,23 @@ const FormikForm = () => {
 				}}
 				validationSchema={Yup.object({
 					recipe_name: Yup.string().required("Required"),
-					recipe_source: Yup.string().required("Required"),
+					source: Yup.string().required("Required"),
 				})}
-				onSubmit={(values) =>
-					setTimeout(() => {
-						alert(JSON.stringify(values, null, 2));
+				onSubmit={(values, { resetForm }) =>
+					setTimeout(async () => {
+						console.log(JSON.stringify(values, null, 2));
+						const response = await fetch(
+							import.meta.env.VITE_BACKEND + "/recipe/new",
+							{
+								method: "POST",
+								headers: {
+									"Content-Type": "application/json",
+								},
+								body: JSON.stringify(values),
+							}
+						);
+						console.log(response);
+						resetForm();
 					}, 500)
 				}>
 				{({ isSubmitting }) => (
@@ -48,34 +62,43 @@ const FormikForm = () => {
 								name="recipe_name"
 								type="text"
 								placeholder="Chicken Parm"
+								lg={true}
 							/>
+							<div
+								className={`flex flex-wrap justify-between gap-3 md:w-1/2`}>
+								<NewInput
+									label="Prep"
+									name="prep_time"
+									type="text"
+									placeholder="10"
+									xsm={true}
+									center={true}
+								/>
 
-							<NewInput
-								label="Prep Time"
-								name="prep_time"
-								type="text"
-								placeholder="10"
-							/>
+								<NewInput
+									label="Cook"
+									name="cook_time"
+									type="text"
+									placeholder="20"
+									xsm={true}
+									center={true}
+								/>
 
+								<NewInput
+									label="Total Time"
+									name="total_time"
+									type="text"
+									placeholder="30"
+									xsm={true}
+									center={true}
+								/>
+							</div>
 							<NewInput
-								label="Cook Time"
-								name="cook_time"
-								type="text"
-								placeholder="20"
-							/>
-
-							<NewInput
-								label="Total Time"
-								name="total_time"
-								type="text"
-								placeholder="30"
-							/>
-
-							<NewInput
-								label="Recipe Source"
+								label="Recipe Source*"
 								name="source"
 								type="text"
-								placeholder="deliciousrecipes.com"
+								placeholder="recipes.com"
+								lg={true}
 							/>
 
 							<div>
@@ -87,109 +110,248 @@ const FormikForm = () => {
 										const { values } = form;
 										const { ingredients } = values;
 										return (
-											<div className="pt-[2px]">
-												<div className=" justify-around w-[96.3%] border-2 hidden md:flex">
-													<p>Amount</p>
-													<p>Measurement</p>
-													<p>Ingredient</p>
-													<p>Instruction</p>
+											<>
+												<div className="md:hidden flex flex-col gap-3">
+													{ingredients.map(
+														(
+															_: string,
+															index: number
+														) => (
+															<div className="flex flex-col relative gap-2 my-1 rounded-xl p-4 bg-lightSurfConHigh">
+																<NewInput
+																	label="Amount"
+																	name={`ingredients.${index}.ingredient_amount`}
+																	type="text"
+																	placeholder="2"
+																	smText={
+																		true
+																	}
+																	md={true}
+																/>
+
+																<NewInput
+																	label="Measurement"
+																	name={`ingredients.${index}.ingredient_measurement`}
+																	type="text"
+																	placeholder="lbs"
+																	smText={
+																		true
+																	}
+																	md={true}
+																/>
+																<NewInput
+																	label="Ingredient"
+																	name={`ingredients.${index}.ingredient_name`}
+																	type="text"
+																	placeholder="chicken"
+																	smText={
+																		true
+																	}
+																	md={true}
+																/>
+																<NewInput
+																	label="Directions"
+																	name={`ingredients.${index}.ingredient_directions`}
+																	type="text"
+																	placeholder="diced"
+																	smText={
+																		true
+																	}
+																	md={true}
+																/>
+																<Button
+																	icon={
+																		<FaTrash />
+																	}
+																	passedFunction={() =>
+																		remove(
+																			index
+																		)
+																	}
+																	outline={
+																		false
+																	}
+																	absolute={
+																		true
+																	}
+																	top={
+																		"top-[10px]"
+																	}
+																	right={
+																		"right-[10px]"
+																	}
+																	color="text-lightError"
+																/>
+															</div>
+														)
+													)}
+													<div className="flex justify-center items-center">
+														<Button
+															icon={<FaPlus />}
+															outline={false}
+															color="text-lightTertiary"
+															passedFunction={() =>
+																push({
+																	ingredient_name:
+																		"",
+																})
+															}
+															extraClasses="w-1/2 border-2 flex justify-center py-1 rounded-xl hover:bg-lightTertiary hover:text-lightSurfCon duration-200 ease-in-out"
+														/>
+													</div>
 												</div>
-												{ingredients.map(
+												<div className="pt-[2px] hidden md:block">
+													{/* <div className="w-[100%] border-2 border-lightOutline hidden md:flex gap-3 bg-lightSurfConHigh rounded-lg">
+														<p className="w-24 text-sm grid place-items-center">
+															Amount
+														</p>
+														<p className="w-24 text-sm grid place-items-center">
+															Measurement
+														</p>
+														<p className="w-36  text-sm grid place-items-center">
+															Ingredient
+														</p>
+														<p className="w-24 text-sm grid place-items-center">
+															Instruction
+														</p>
+													</div> */}
+													{ingredients.map(
+														(
+															_: string,
+															index: number
+														) => (
+															<div className="flex gap-3 my-1 bg-lightSurfConHigh p-4 rounded-xl">
+																<p className="grid place-content-center font-bold">
+																	{index + 1}
+																</p>
+																<NewInput
+																	name={`ingredients.${index}.ingredient_amount`}
+																	type="text"
+																	placeholder="2"
+																	xsm={true}
+																/>
+
+																<NewInput
+																	name={`ingredients.${index}.ingredient_measurement`}
+																	type="text"
+																	placeholder="lbs"
+																	sm={true}
+																/>
+																<NewInput
+																	name={`ingredients.${index}.ingredient_name`}
+																	type="text"
+																	placeholder="chicken"
+																	xl={true}
+																/>
+																<NewInput
+																	name={`ingredients.${index}.ingredient_directions`}
+																	type="text"
+																	placeholder="diced"
+																	sm={true}
+																/>
+																<Button
+																	icon={
+																		<FaTrash />
+																	}
+																	passedFunction={() =>
+																		remove(
+																			index
+																		)
+																	}
+																	outline={
+																		false
+																	}
+																	color="text-lightError"
+																/>
+															</div>
+														)
+													)}
+													<div className="flex justify-center pt-2 items-center">
+														<Button
+															icon={<FaPlus />}
+															outline={false}
+															color="text-lightTertiary"
+															passedFunction={() =>
+																push({
+																	ingredient_name:
+																		"",
+																})
+															}
+															extraClasses="w-1/2 md:w-1/3 border-2 flex justify-center py-1 rounded-xl hover:scale-105 hover:shadow-lg duration-200 ease-in-out"
+														/>
+													</div>
+												</div>
+											</>
+										);
+									}}
+								</FieldArray>
+							</div>
+							<div>
+								<p className="font-bold">Instructions</p>
+								<FieldArray name="instructions">
+									{(fieldArrayProps) => {
+										const { push, remove, form } =
+											fieldArrayProps;
+										const { values } = form;
+										const { instructions } = values;
+										return (
+											<div className="flex flex-col gap-2">
+												{instructions.map(
 													(
-														ingredient,
+														_: string,
 														index: number
 													) => (
-														<div className="flex">
-															<Field
-																name={`ingredients.${index}.ingredient_amount`}
+														<div className="flex gap-3 bg-lightSurfConHigh rounded-xl p-4">
+															<p className="grid place-content-center font-bold">
+																{index + 1}
+															</p>
+															<NewInput
+																name={`instructions.${index}.instruction`}
 																type="text"
-																placeholder="2"
+																xl={true}
 															/>
-															<Field
-																name={`ingredients.${index}.ingredient_amount`}
-																type="text"
-																placeholder="lbs"
-															/>
-															<Field
-																name={`ingredients.${index}.ingredient_name`}
-																type="text"
-																placeholder="chicken"
-															/>
-															<Field
-																name={`ingredients.${index}.ingredient_directions`}
-																type="text"
-																placeholder="diced"
-															/>
-															<button
-																className="ml-3 text-lightError"
-																type="button"
-																onClick={() =>
+
+															<Button
+																icon={
+																	<FaTrash />
+																}
+																passedFunction={() =>
 																	remove(
 																		index
 																	)
-																}>
-																<FaTrash />
-															</button>
+																}
+																outline={false}
+																color="text-lightError"
+															/>
 														</div>
 													)
 												)}
-												<div className="flex justify-center pt-2">
-													<button
-														type="button"
-														onClick={() =>
+												<div className="flex justify-center">
+													<Button
+														icon={<FaPlus />}
+														outline={false}
+														color="text-lightTertiary"
+														passedFunction={() =>
 															push({
-																ingredient_name:
-																	"",
+																instruction: "",
 															})
 														}
-														className="border-2 w-1/2 rounded-lg">
-														Add
-													</button>
+														extraClasses="w-1/2 border-2 flex justify-center py-1 rounded-xl hover:scale-105 hover:shadow-lg duration-200 ease-in-out md:w-1/3"
+													/>
 												</div>
 											</div>
 										);
 									}}
 								</FieldArray>
 							</div>
-							{/* <FieldArray
-							name="ingredients"
-							render={(arrayHelpers) => (
-								<div>
-									{values.ingredients.map(
-										(ingredient, index) => (
-											<div key={index}>
-												<Field
-													name={`ingredients.${index}`}
-												/>
-												<button
-													type="button"
-													onClick={() =>
-														arrayHelpers.remove(
-															index
-														)
-													}>
-													Remove
-												</button>
-												<button
-													type="button"
-													onClick={() =>
-														arrayHelpers.insert(
-															index,
-															""
-														)
-													}>
-													Add
-												</button>
-											</div>
-										)
-									)}
-								</div>
-							)}
-						/> */}
-
-							<button type="submit" disabled={isSubmitting}>
-								Submit
-							</button>
+							<div className="flex justify-center">
+								<button
+									type="submit"
+									disabled={isSubmitting}
+									className={`font-bold rounded-xl border-2 w-1/3 py-1 mt-3  text-lightSurfCon bg-lightPrimary duration-200 ease-in-out hover:scale-105 hover:shadow-lg `}>
+									Create
+								</button>
+							</div>
 						</div>
 					</Form>
 				)}

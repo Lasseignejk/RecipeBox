@@ -41,11 +41,12 @@ const Button = ({
 			? "border-[1px] border-lightOutline px-4 rounded-full"
 			: "";
 	const roundedClasses = rounded ? "px-4 py-1 rounded-full" : "";
+	const colorClasses = color ? `${color}` : "text-lightPrimary";
 	return (
 		<button
 			type="button"
 			onClick={() => passedFunction()}
-			className={`text-lightPrimary ${outlineClasses} ${absoluteClasses} ${iconClasses} ${top} ${right} ${color} ${roundedClasses} ${defaultClasses} ${invertedClasses} ${extraClasses}`}>
+			className={` ${outlineClasses} ${absoluteClasses} ${iconClasses} ${top} ${right} ${colorClasses} ${roundedClasses} ${defaultClasses} ${invertedClasses} ${extraClasses}`}>
 			{text ? text : icon}
 		</button>
 	);

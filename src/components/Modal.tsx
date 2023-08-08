@@ -3,6 +3,7 @@ import Button from "./Button";
 import Form from "./Form";
 import { formStateVariableProps, FieldsData } from "../util/interfaces";
 import FormikForm from "./FormikForm";
+import PageTitle from "./PageTitle";
 
 interface ModalProps {
 	form: boolean;
@@ -45,7 +46,7 @@ const Modal = ({
 					/>
 				)}
 
-				{title && <h1>{title}</h1>}
+				{title && <PageTitle title="New Recipe" />}
 				{form && fields && formStateFunction && formStateVariable && (
 					// <Form
 					// 	fields={fields}
