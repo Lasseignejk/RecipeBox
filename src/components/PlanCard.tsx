@@ -10,7 +10,7 @@ interface CardsProps {
 }
 
 const PlanCard = ({ card }: CardsProps): JSX.Element => {
-	const highlightClasses = card.highlight
+	const highlightClasses: string = card.highlight
 		? "bg-lightSurfConLow text-lightTertiary h-40"
 		: "bg-lightSurfConHigh text-lightPrimary h-36";
 	return (

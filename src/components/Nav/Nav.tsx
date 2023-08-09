@@ -8,7 +8,7 @@ interface LinksInterface {
 	link: string;
 }
 
-const Nav = () => {
+const Nav = (): JSX.Element => {
 	const links: LinksInterface[] = [
 		{
 			title: "Plan",

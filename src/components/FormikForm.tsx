@@ -1,10 +1,10 @@
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
-import NewInput from "./NewInput";
+import Input from "./Input";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import Button from "./Button";
 
-const FormikForm = () => {
+const FormikForm = (): JSX.Element => {
 	return (
 		<div className="md:w-3/4">
 			<Formik
@@ -57,7 +57,7 @@ const FormikForm = () => {
 				{({ isSubmitting }) => (
 					<Form>
 						<div className="flex flex-col gap-3">
-							<NewInput
+							<Input
 								label="Recipe Name*"
 								name="recipe_name"
 								type="text"
@@ -66,7 +66,7 @@ const FormikForm = () => {
 							/>
 							<div
 								className={`flex flex-wrap justify-between gap-3 md:w-1/2`}>
-								<NewInput
+								<Input
 									label="Prep"
 									name="prep_time"
 									type="text"
@@ -75,7 +75,7 @@ const FormikForm = () => {
 									center={true}
 								/>
 
-								<NewInput
+								<Input
 									label="Cook"
 									name="cook_time"
 									type="text"
@@ -84,7 +84,7 @@ const FormikForm = () => {
 									center={true}
 								/>
 
-								<NewInput
+								<Input
 									label="Total Time"
 									name="total_time"
 									type="text"
@@ -93,7 +93,7 @@ const FormikForm = () => {
 									center={true}
 								/>
 							</div>
-							<NewInput
+							<Input
 								label="Recipe Source*"
 								name="source"
 								type="text"
@@ -118,7 +118,7 @@ const FormikForm = () => {
 															index: number
 														) => (
 															<div className="flex flex-col relative gap-2 my-1 rounded-xl p-4 bg-lightSurfConHigh">
-																<NewInput
+																<Input
 																	label="Amount"
 																	name={`ingredients.${index}.ingredient_amount`}
 																	type="text"
@@ -129,7 +129,7 @@ const FormikForm = () => {
 																	md={true}
 																/>
 
-																<NewInput
+																<Input
 																	label="Measurement"
 																	name={`ingredients.${index}.ingredient_measurement`}
 																	type="text"
@@ -139,7 +139,7 @@ const FormikForm = () => {
 																	}
 																	md={true}
 																/>
-																<NewInput
+																<Input
 																	label="Ingredient"
 																	name={`ingredients.${index}.ingredient_name`}
 																	type="text"
@@ -149,7 +149,7 @@ const FormikForm = () => {
 																	}
 																	md={true}
 																/>
-																<NewInput
+																<Input
 																	label="Directions"
 																	name={`ingredients.${index}.ingredient_directions`}
 																	type="text"
@@ -224,26 +224,26 @@ const FormikForm = () => {
 																<p className="grid place-content-center font-bold">
 																	{index + 1}
 																</p>
-																<NewInput
+																<Input
 																	name={`ingredients.${index}.ingredient_amount`}
 																	type="text"
 																	placeholder="2"
 																	xsm={true}
 																/>
 
-																<NewInput
+																<Input
 																	name={`ingredients.${index}.ingredient_measurement`}
 																	type="text"
 																	placeholder="lbs"
 																	sm={true}
 																/>
-																<NewInput
+																<Input
 																	name={`ingredients.${index}.ingredient_name`}
 																	type="text"
 																	placeholder="chicken"
 																	xl={true}
 																/>
-																<NewInput
+																<Input
 																	name={`ingredients.${index}.ingredient_directions`}
 																	type="text"
 																	placeholder="diced"
@@ -305,7 +305,7 @@ const FormikForm = () => {
 															<p className="grid place-content-center font-bold">
 																{index + 1}
 															</p>
-															<NewInput
+															<Input
 																name={`instructions.${index}.instruction`}
 																type="text"
 																xl={true}

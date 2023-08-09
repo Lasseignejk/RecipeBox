@@ -1,68 +1,49 @@
-import { formStateVariableProps, FieldsData } from "../util/interfaces";
-
-interface Event {
-	target: HTMLInputElement;
-}
+import { useField } from "formik";
 
 interface InputProps {
-	field: FieldsData;
-	onChangeFunction?: (e: Event) => void;
-	formStateVariable?: formStateVariableProps;
-	table?: boolean;
-	formStateFunction?: (obj: formStateVariableProps) => void;
+	label?: string;
+	name: string;
+	type: string;
+	placeholder?: string;
+	xsm?: boolean;
+	sm?: boolean;
+	md?: boolean;
+	lg?: boolean;
+	xl?: boolean;
+	center?: boolean;
+	smText?: boolean;
 }
 
-const Input = ({
-	field,
-	onChangeFunction,
-	formStateVariable,
-}: InputProps): JSX.Element => {
+const NewInput = ({ label, ...props }: InputProps): JSX.Element => {
+	const [field, meta] = useField(props);
+
+	const xsmClasses: string = props.xsm ? "w-14" : "";
+	const smClasses: string = props.sm ? "w-24" : "";
+	const mdClasses: string = props.md ? "w-36" : "";
+	const lgClasses: string = props.lg ? "w-48" : "";
+	const xlClasses: string = props.xl ? "w-full" : "";
+	const smTextClasses: string = props.smText ? "text-sm" : "";
+	const centerClasses: string = props.center
+		? "items-center md:items-start"
+		: "";
+
 	return (
-		<>
-			{field.label && formStateVariable && (
-				<div>
-					<label htmlFor={field.value}>{field.labelText}</label>
-					<input
-						type={field.type}
-						id={field.value}
-						onChange={onChangeFunction}
-						value={
-							formStateVariable[field.value] !== undefined
-								? (formStateVariable[field.value] as string)
-								: ""
-						}
-						name={field.value}
-					/>
-				</div>
-			)}
-			{/* {!field.label && formStateVariable && (
-				<input
-					type={field.type}
-					id={field.value}
-					onChange={onChangeFunction}
-					value={
-						formStateVariable[field.value]
-							? formStateVariable[field.value]
-							: ""
-					}
-					name={field.value}
-				/>
-			)} */}
-			{/* {table && (
-				<input
-					type={field.type}
-					id={field.value}
-					onChange={(e) => setOneIngredientTableState(e)}
-					value={
-						oneIngredient[field.value]
-							? oneIngredient[field.value]
-							: ""
-					}
-					name={field.value}
-				/>
-			)} */}
-		</>
+		<div className={`form_input ${centerClasses} ${xlClasses}`}>
+			<label
+				htmlFor={props.name}
+				className={`font-bold ${smTextClasses}`}>
+				{label}
+			</label>
+			<input
+				className={`text_input ${xsmClasses} ${smClasses} ${mdClasses} ${lgClasses} ${xlClasses}`}
+				{...field}
+				{...props}
+			/>
+			{meta.touched && meta.error ? (
+				<div className="error">{meta.error}</div>
+			) : null}
+		</div>
 	);
 };
 
-export default Input;
+export default NewInput;

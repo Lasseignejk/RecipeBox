@@ -9,7 +9,6 @@ import { setSelectedRecipe } from "../../reducers/SelectedSlice";
 import RecipeIngredient from "./RecipeIngredient";
 import { showRecipeFalse, showRecipeTrue } from "../../reducers/showMoreSlice";
 import { useState } from "react";
-import { recipes } from "../../util/recipes";
 
 interface RecipeCardProps {
 	data: RecipeData;
@@ -45,7 +44,7 @@ interface InstructionsData {
 	instruction: string;
 }
 
-const RecipeCard = ({ data, column }: RecipeCardProps) => {
+const RecipeCard = ({ data, column }: RecipeCardProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 	// const selectedRecipe = useAppSelector((state) => state.selected.recipe);
 	const showRecipe = useAppSelector((state) => state.showMore.showRecipe);

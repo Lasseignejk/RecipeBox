@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { recipes } from "../../util/recipes";
 import RecipeCard from "./RecipeCard";
 import { useAppDispatch } from "../../store";
-import { useAppSelector } from "../../util/hooks";
 import { setAllRecipes } from "../../reducers/showMoreSlice";
 
 interface RecipeData {

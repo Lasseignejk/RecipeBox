@@ -15,6 +15,7 @@ import LogoutButton from "./LogoutButton";
 import Profile from "./Profile";
 import { useAuth0 } from "@auth0/auth0-react";
 import { updateUser } from "../reducers/UserSlice";
+import FormikForm from "./FormikForm";
 
 interface PageProps {
 	title: string;
@@ -37,17 +38,17 @@ const Page = ({ title }: PageProps): JSX.Element => {
 	const mongoUser = useAppSelector((state) => state.mongoUser.values);
 	console.log("mongoUser", mongoUser);
 
-	const [newRecipeForm, setNewRecipeForm] = useState<formStateVariableProps>({
-		recipe_name: "",
-		prep_time: "",
-		cook_time: "",
-		total_time: "",
-		servings: "",
-		category: "",
-		source: "",
-		tags: [],
-		ingredients: [],
-	});
+	// const [newRecipeForm, setNewRecipeForm] = useState<formStateVariableProps>({
+	// 	recipe_name: "",
+	// 	prep_time: "",
+	// 	cook_time: "",
+	// 	total_time: "",
+	// 	servings: "",
+	// 	category: "",
+	// 	source: "",
+	// 	tags: [],
+	// 	ingredients: [],
+	// });
 
 	useEffect(() => {
 		if (isAuthenticated) {
@@ -131,15 +132,15 @@ const Page = ({ title }: PageProps): JSX.Element => {
 					<SearchBar />
 					{openNewRecipeModal && (
 						<Modal
-							form={true}
-							table={true}
-							headers={newRecipeHeaders}
-							fields={newRecipeFields}
+							form={<FormikForm />}
+							// table={true}
+							// headers={newRecipeHeaders}
+							// fields={newRecipeFields}
 							title={"New Recipe"}
 							openStateFunction={setOpenNewRecipeModal}
 							openStateVariable={openNewRecipeModal}
-							formStateFunction={setNewRecipeForm}
-							formStateVariable={newRecipeForm}
+							// formStateFunction={setNewRecipeForm}
+							// formStateVariable={newRecipeForm}
 						/>
 					)}
 

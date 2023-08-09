@@ -26,22 +26,22 @@ const Button = ({
 	rounded,
 	style,
 	extraClasses,
-}: ButtonProps) => {
-	const outlineClasses = outline
+}: ButtonProps): JSX.Element => {
+	const outlineClasses: string = outline
 		? "border-[1px] border-lightOutline px-4 text-sm rounded-xl hover:scale-105 duration-200 ease-in-out"
 		: "";
-	const absoluteClasses = absolute ? "absolute" : "";
-	const iconClasses = icon ? "text-lg" : "";
-	const defaultClasses =
+	const absoluteClasses: string = absolute ? "absolute" : "";
+	const iconClasses: string = icon ? "text-lg" : "";
+	const defaultClasses: string =
 		style == "default"
 			? "bg-lightSecondary text-lightSurfCon rounded-full px-4 py-1"
 			: "";
-	const invertedClasses =
+	const invertedClasses: string =
 		style == "inverted"
 			? "border-[1px] border-lightOutline px-4 rounded-full"
 			: "";
-	const roundedClasses = rounded ? "px-4 py-1 rounded-full" : "";
-	const colorClasses = color ? `${color}` : "text-lightPrimary";
+	const roundedClasses: string = rounded ? "px-4 py-1 rounded-full" : "";
+	const colorClasses: string = color ? `${color}` : "text-lightPrimary";
 	return (
 		<button
 			type="button"

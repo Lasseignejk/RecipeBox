@@ -8,7 +8,7 @@ interface IngredientProps {
 		ingredient_category: string | null;
 	};
 }
-const RecipeIngredient = ({ data }: IngredientProps) => {
+const RecipeIngredient = ({ data }: IngredientProps): JSX.Element => {
 	return (
 		<p className="text-sm">
 			{data.ingredient_amount && data.ingredient_amount}{" "}
