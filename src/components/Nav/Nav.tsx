@@ -1,15 +1,25 @@
 import { ReactNode } from "react";
-import { FaUser, FaCalendarAlt, FaBook, FaClipboardList } from "react-icons/fa";
+import {
+	FaUser,
+	FaCalendarAlt,
+	FaBook,
+	FaClipboardList,
+	FaHome,
+	FaSignInAlt,
+} from "react-icons/fa";
 import NavLink from "./NavLink";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface LinksInterface {
 	title: string;
+	secondaryTitle?: string;
 	icon: ReactNode;
 	link: string;
 }
 
-const Nav = (): JSX.Element => {
-	const links: LinksInterface[] = [
+const Nav = () => {
+	const { isAuthenticated, user } = useAuth0();
+	const userLinks: LinksInterface[] = [
 		{
 			title: "Plan",
 			icon: <FaCalendarAlt />,
@@ -32,15 +42,45 @@ const Nav = (): JSX.Element => {
 			link: "http://localhost:5173/account",
 		},
 	];
+
+	const visitorLinks: LinksInterface[] = [
+		{ title: "Home", icon: <FaHome />, link: "http://localhost:5173/" },
+		{
+			title: "About",
+			icon: <FaHome />,
+			link: "http://localhost:5173/about",
+		},
+		{
+			title: "Login",
+			icon: <FaSignInAlt />,
+			link: "http://localhost:5173/login",
+		},
+	];
 	return (
-		<nav className={`h-16 fixed bottom-0 w-full bg-lightSurfCon z-10`}>
-			<h1 className={`hidden`}>Recipe Box</h1>
-			<ul className={`flex justify-evenly h-full items-center`}>
-				{links.map((link, index) => (
-					<NavLink link={link} key={index} />
-				))}
-			</ul>
-		</nav>
+		<>
+			{isAuthenticated && (
+				<nav
+					className={`h-16 fixed bottom-0 w-full bg-lightSurfCon z-10`}>
+					<h1 className={`hidden`}>Recipe Box</h1>
+					<ul className={`flex justify-evenly h-full items-center`}>
+						{userLinks.map((link, index) => (
+							<NavLink link={link} key={index} />
+						))}
+					</ul>
+				</nav>
+			)}
+			{!isAuthenticated && (
+				<nav
+					className={`h-16 fixed bottom-0 w-full bg-lightSurfCon z-10`}>
+					<h1 className={`hidden`}>Recipe Box</h1>
+					<ul className={`flex justify-evenly h-full items-center`}>
+						{visitorLinks.map((link, index) => (
+							<NavLink link={link} key={index} />
+						))}
+					</ul>
+				</nav>
+			)}
+		</>
 	);
 };
 

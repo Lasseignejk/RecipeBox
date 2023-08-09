@@ -8,14 +8,14 @@ import Button from "./Button";
 import RecipeContainer from "./Recipe/RecipeContainer";
 import SearchBar from "./Search/SearchBar";
 import Modal from "./Modal";
-import { newRecipeFields, newRecipeHeaders } from "../util/data";
-import { formStateVariableProps } from "../util/interfaces";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import Profile from "./Profile";
 import { useAuth0 } from "@auth0/auth0-react";
 import { updateUser } from "../reducers/UserSlice";
 import FormikForm from "./FormikForm";
+import { useNavigate } from "react-router-dom";
+import { setSelectedNav } from "../reducers/SelectedSlice";
 
 interface PageProps {
 	title: string;
@@ -32,26 +32,14 @@ const Page = ({ title }: PageProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const [openNewRecipeModal, setOpenNewRecipeModal] =
 		useState<boolean>(false);
-
 	const { isLoading, error, isAuthenticated, user } = useAuth0();
 
 	const mongoUser = useAppSelector((state) => state.mongoUser.values);
 	console.log("mongoUser", mongoUser);
 
-	// const [newRecipeForm, setNewRecipeForm] = useState<formStateVariableProps>({
-	// 	recipe_name: "",
-	// 	prep_time: "",
-	// 	cook_time: "",
-	// 	total_time: "",
-	// 	servings: "",
-	// 	category: "",
-	// 	source: "",
-	// 	tags: [],
-	// 	ingredients: [],
-	// });
-
 	useEffect(() => {
 		if (isAuthenticated) {
+			console.log("user authenticated");
 			const checkUser = async () => {
 				try {
 					const response = await fetch(
@@ -72,6 +60,11 @@ const Page = ({ title }: PageProps): JSX.Element => {
 				}
 			};
 			checkUser();
+		}
+		if (!isAuthenticated) {
+			dispatch(setSelectedNav("Home"));
+			console.log("user not authenticated");
+			handleNavigate();
 		}
 	}, [isAuthenticated, user]);
 
@@ -104,9 +97,15 @@ const Page = ({ title }: PageProps): JSX.Element => {
 		},
 	];
 	const selected = useAppSelector((state) => state.selected.nav);
+	console.log("Page", selected);
+
+	const navigate = useNavigate();
+	const handleNavigate = () => {
+		navigate("/");
+	};
 	return (
 		<div className={`pb-20`}>
-			{selected == "Plan" && (
+			{selected == "Plan" && isAuthenticated && (
 				<>
 					<PlanCalendar />
 					<div className="flex flex-col gap-5 p-3">
@@ -154,7 +153,11 @@ const Page = ({ title }: PageProps): JSX.Element => {
 			)}
 			{selected == "Account" && (
 				<div className={`p-3`}>
-					<PageTitle title={title} />
+					{!isAuthenticated ? (
+						<PageTitle title={"Login to your account"} />
+					) : (
+						<PageTitle title={title} />
+					)}
 					{error && <p>Authentication error</p>}
 					{!error && isLoading && <p>Loading...</p>}
 					{!error && !isLoading && (

@@ -3,8 +3,10 @@ import * as Yup from "yup";
 import Input from "./Input";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import Button from "./Button";
+import { useAppSelector } from "../util/hooks";
 
 const FormikForm = (): JSX.Element => {
+	const mongoUser = useAppSelector((state) => state.mongoUser.values);
 	return (
 		<div className="md:w-3/4">
 			<Formik
@@ -32,6 +34,7 @@ const FormikForm = (): JSX.Element => {
 						},
 					],
 					tags: [""],
+					_id: mongoUser._id,
 				}}
 				validationSchema={Yup.object({
 					recipe_name: Yup.string().required("Required"),
@@ -50,7 +53,6 @@ const FormikForm = (): JSX.Element => {
 								body: JSON.stringify(values),
 							}
 						);
-						console.log(response);
 						resetForm();
 					}, 500)
 				}>

@@ -7,7 +7,7 @@ interface SelectedInitialState {
 }
 
 const initialState: SelectedInitialState = {
-	nav: "Plan",
+	nav: "Home",
 	recipe: "",
 };
 
