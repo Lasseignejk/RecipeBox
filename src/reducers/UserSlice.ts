@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface UserInitialState {
 	values: {
@@ -9,6 +8,20 @@ interface UserInitialState {
 		username?: string;
 		picture: string;
 	};
+	loading: boolean;
+}
+
+interface UserObject {
+	email?: string;
+	email_verified?: boolean;
+	family_name?: string;
+	given_name?: string;
+	locale?: string;
+	name?: string;
+	nickname?: string;
+	picture?: string;
+	sub?: string;
+	updated_at?: string;
 }
 
 const initialState: UserInitialState = {
@@ -19,17 +32,42 @@ const initialState: UserInitialState = {
 		username: "",
 		picture: "",
 	},
+	loading: false,
 };
+export const fetchUserDetails = createAsyncThunk(
+	"user/getDetails",
+	async (user: UserObject) => {
+		const response = await fetch(
+			import.meta.env.VITE_BACKEND + "/user/check",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(user),
+			}
+		);
+		const data = await response.json();
+		return data;
+	}
+);
 
-export const userSlice = createSlice({
-	name: "mongoUser",
+export const userDetailsSlice = createSlice({
+	name: "userDetails",
 	initialState,
-	reducers: {
-		updateUser: (state, action) => {
-			state.values = action.payload;
-		},
+	reducers: {},
+	extraReducers: (builder) => {
+		builder.addCase(fetchUserDetails.pending, (state) => {
+			state.loading = true;
+		}),
+			builder.addCase(fetchUserDetails.fulfilled, (state, action) => {
+				state.loading = false;
+				state.values = action.payload;
+			}),
+			builder.addCase(fetchUserDetails.rejected, (state) => {
+				state.loading = false;
+			});
 	},
 });
 
-export const { updateUser } = userSlice.actions;
-export default userSlice.reducer;
+export default userDetailsSlice.reducer;

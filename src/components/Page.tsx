@@ -12,10 +12,12 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import Profile from "./Profile";
 import { useAuth0 } from "@auth0/auth0-react";
-import { updateUser } from "../reducers/UserSlice";
+// import { updateUser } from "../reducers/UserSlice";
 import FormikForm from "./FormikForm";
 import { useNavigate } from "react-router-dom";
 import { setSelectedNav } from "../reducers/SelectedSlice";
+import { fetchUserRecipes } from "../reducers/userRecipesSlice";
+import { fetchUserDetails } from "../reducers/UserSlice";
 
 interface PageProps {
 	title: string;
@@ -28,38 +30,45 @@ interface CardsProps {
 	highlight: boolean;
 }
 
+interface UserObject {
+	email?: string;
+	email_verified?: boolean;
+	family_name?: string;
+	given_name?: string;
+	locale?: string;
+	name?: string;
+	nickname?: string;
+	picture?: string;
+	sub?: string;
+	updated_at?: string;
+}
+
 const Page = ({ title }: PageProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const [openNewRecipeModal, setOpenNewRecipeModal] =
 		useState<boolean>(false);
 	const { isLoading, error, isAuthenticated, user } = useAuth0();
+	console.log(user);
 
-	const mongoUser = useAppSelector((state) => state.mongoUser.values);
-	console.log("mongoUser", mongoUser);
+	// const mongoUser = useAppSelector((state) => state.mongoUser.values);
+
+	const { values } = useAppSelector((state) => state.userDetails);
+	console.log("userDetailsId", values._id);
+
+	const getUserDetailsAndRecipes = async (user: UserObject) => {
+		try {
+			const data = await dispatch(fetchUserDetails(user));
+			console.log("DATA", data);
+			await dispatch(fetchUserRecipes(values._id));
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	useEffect(() => {
-		if (isAuthenticated) {
+		if (isAuthenticated && user) {
 			console.log("user authenticated");
-			const checkUser = async () => {
-				try {
-					const response = await fetch(
-						import.meta.env.VITE_BACKEND + "/user/check",
-						{
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(user),
-						}
-					);
-					const data = await response.json();
-
-					dispatch(updateUser(data));
-				} catch (error) {
-					console.log(error);
-				}
-			};
-			checkUser();
+			getUserDetailsAndRecipes(user);
 		}
 		if (!isAuthenticated) {
 			dispatch(setSelectedNav("Home"));
@@ -97,7 +106,7 @@ const Page = ({ title }: PageProps): JSX.Element => {
 		},
 	];
 	const selected = useAppSelector((state) => state.selected.nav);
-	console.log("Page", selected);
+	// console.log("Page", selected);
 
 	const navigate = useNavigate();
 	const handleNavigate = () => {

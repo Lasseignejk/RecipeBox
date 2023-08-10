@@ -45,11 +45,7 @@ const Nav = () => {
 
 	const visitorLinks: LinksInterface[] = [
 		{ title: "Home", icon: <FaHome />, link: "http://localhost:5173/" },
-		{
-			title: "About",
-			icon: <FaHome />,
-			link: "http://localhost:5173/about",
-		},
+
 		{
 			title: "Login",
 			icon: <FaSignInAlt />,

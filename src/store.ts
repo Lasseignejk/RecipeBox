@@ -4,6 +4,7 @@ import selectedReducer from "./reducers/SelectedSlice";
 import todayReducer from "./reducers/TodaySlice";
 import showMoreReducer from "./reducers/showMoreSlice";
 import userReducer from "./reducers/UserSlice";
+import userDetailsReducer from "./reducers/userRecipesSlice";
 
 import { useDispatch } from "react-redux";
 
@@ -12,7 +13,8 @@ export const store = configureStore({
 		selected: selectedReducer,
 		today: todayReducer,
 		showMore: showMoreReducer,
-		mongoUser: userReducer,
+		userDetails: userReducer,
+		userRecipes: userDetailsReducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
