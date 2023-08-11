@@ -13,6 +13,7 @@ import {
 } from "../../reducers/showRecipeDetailsSlice";
 import { useState } from "react";
 import { RecipeProps } from "../../util/interfaces";
+import { Link } from "react-router-dom";
 
 interface RecipeCardProps {
 	data: RecipeProps;
@@ -76,11 +77,12 @@ const RecipeCard = ({ data, column }: RecipeCardProps): JSX.Element => {
 					className={`recipe_img border-2 ${imageColumnClasses}`}></div>
 			)}
 
-			<h1
+			<Link
+				to={`/recipes/${data.recipe_name}`}
 				className={`font-bold recipe_title pl-1 hover:cursor-pointer`}
 				onClick={() => dispatch(setSelectedRecipe(data.recipe_name))}>
 				{formatRecipeName(data.recipe_name, 26)}
-			</h1>
+			</Link>
 
 			<div
 				className={`recipe_prep flex gap-2 items-center pl-1 justify-center text-[13px]`}>
@@ -111,7 +113,13 @@ const RecipeCard = ({ data, column }: RecipeCardProps): JSX.Element => {
 			<div
 				className={`recipe_ingredients flex flex-col gap-1 pt-2 ${ingredientsClasses}`}>
 				{data.ingredients.map((ingredient, index) => (
-					<RecipeIngredient data={ingredient} key={index} />
+					<RecipeIngredient
+						data={ingredient}
+						key={index}
+						textSm={true}
+						listStyle="none"
+						allowLineThrough={false}
+					/>
 				))}
 			</div>
 
