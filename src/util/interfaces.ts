@@ -1,5 +1,10 @@
-export interface formStateVariableProps {
-	[key: string]: string | undefined | string[] | IngredientsProps[];
+export interface RecipeProps {
+	[key: string]:
+		| string
+		| undefined
+		| string[]
+		| IngredientsProps[]
+		| InstructionsProps[];
 	recipe_name: string;
 	prep_time: string;
 	cook_time: string;
@@ -10,13 +15,20 @@ export interface formStateVariableProps {
 	img?: string;
 	tags: string[];
 	ingredients: IngredientsProps[];
+	instructions: InstructionsProps[];
+	notes: string;
+}
+
+export interface InstructionsProps {
+	step: number;
+	instruction: string;
 }
 
 export interface IngredientsProps {
 	ingredient_name: string;
-	ingredient_amount: string;
-	ingredient_measurement: string;
-	ingredient_directions: string;
+	ingredient_amount?: string;
+	ingredient_measurement?: string;
+	ingredient_directions?: string;
 	ingredient_total?: string;
 	ingredient_category?: string;
 }
@@ -27,12 +39,4 @@ export interface FieldsData {
 	label: boolean;
 	labelText?: string;
 	value: string;
-}
-
-export interface FormProps {
-	fields: FieldsData[];
-	formStateFunction: (obj: formStateVariableProps) => void;
-	formStateVariable: formStateVariableProps;
-	table?: boolean;
-	headers?: string[];
 }

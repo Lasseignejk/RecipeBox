@@ -15,7 +15,7 @@ const initialState: ShowMoreInitialState = {
 	},
 };
 
-export const showMoreSlice = createSlice({
+export const showRecipeDetailsSlice = createSlice({
 	name: "showMore",
 	initialState,
 	reducers: {
@@ -32,5 +32,5 @@ export const showMoreSlice = createSlice({
 });
 
 export const { setAllRecipes, showRecipeTrue, showRecipeFalse } =
-	showMoreSlice.actions;
-export default showMoreSlice.reducer;
+	showRecipeDetailsSlice.actions;
+export default showRecipeDetailsSlice.reducer;

@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RecipeProps } from "../util/interfaces";
 
 interface UserInitialState {
-	userRecipes: string;
+	userRecipes: RecipeProps[];
 	loading: boolean;
 }
 
 const initialState: UserInitialState = {
-	userRecipes: "",
+	userRecipes: [],
 	loading: false,
 };
 

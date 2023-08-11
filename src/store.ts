@@ -2,9 +2,10 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import selectedReducer from "./reducers/SelectedSlice";
 import todayReducer from "./reducers/TodaySlice";
-import showMoreReducer from "./reducers/showMoreSlice";
+import showMoreReducer from "./reducers/showRecipeDetailsSlice";
 import userReducer from "./reducers/UserSlice";
 import userDetailsReducer from "./reducers/userRecipesSlice";
+import toggleReducer from "./reducers/toggleSlice";
 
 import { useDispatch } from "react-redux";
 
@@ -15,6 +16,7 @@ export const store = configureStore({
 		showMore: showMoreReducer,
 		userDetails: userReducer,
 		userRecipes: userDetailsReducer,
+		toggle: toggleReducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

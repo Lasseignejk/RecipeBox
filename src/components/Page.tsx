@@ -12,12 +12,12 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import Profile from "./Profile";
 import { useAuth0 } from "@auth0/auth0-react";
-// import { updateUser } from "../reducers/UserSlice";
 import FormikForm from "./FormikForm";
 import { useNavigate } from "react-router-dom";
 import { setSelectedNav } from "../reducers/SelectedSlice";
 import { fetchUserRecipes } from "../reducers/userRecipesSlice";
 import { fetchUserDetails } from "../reducers/UserSlice";
+import { RecipeProps } from "../util/interfaces";
 
 interface PageProps {
 	title: string;
@@ -45,24 +45,26 @@ interface UserObject {
 
 const Page = ({ title }: PageProps): JSX.Element => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+
 	const [openNewRecipeModal, setOpenNewRecipeModal] =
 		useState<boolean>(false);
+
 	const { isLoading, error, isAuthenticated, user } = useAuth0();
-	console.log(user);
 
-	// const mongoUser = useAppSelector((state) => state.mongoUser.values);
+	const selected: string = useAppSelector((state) => state.selected.nav);
+	const userRecipes: RecipeProps[] = useAppSelector(
+		(state) => state.userRecipes.userRecipes
+	);
+	const toggleRecipes: boolean = useAppSelector(
+		(state) => state.toggle.toggleFetchRecipes
+	);
 
-	const { values } = useAppSelector((state) => state.userDetails);
-	console.log("userDetailsId", values._id);
-
-	const getUserDetailsAndRecipes = async (user: UserObject) => {
-		try {
-			const data = await dispatch(fetchUserDetails(user));
-			console.log("DATA", data);
-			await dispatch(fetchUserRecipes(values._id));
-		} catch (error) {
-			console.log(error);
-		}
+	const getUserDetailsAndRecipes = async (
+		user: UserObject
+	): Promise<void> => {
+		const data = await dispatch(fetchUserDetails(user));
+		await dispatch(fetchUserRecipes(data.payload._id));
 	};
 
 	useEffect(() => {
@@ -75,7 +77,7 @@ const Page = ({ title }: PageProps): JSX.Element => {
 			console.log("user not authenticated");
 			handleNavigate();
 		}
-	}, [isAuthenticated, user]);
+	}, [isAuthenticated, user, toggleRecipes]);
 
 	const cards: CardsProps[] = [
 		{
@@ -105,11 +107,8 @@ const Page = ({ title }: PageProps): JSX.Element => {
 			highlight: false,
 		},
 	];
-	const selected = useAppSelector((state) => state.selected.nav);
-	// console.log("Page", selected);
 
-	const navigate = useNavigate();
-	const handleNavigate = () => {
+	const handleNavigate = (): void => {
 		navigate("/");
 	};
 	return (
@@ -140,19 +139,28 @@ const Page = ({ title }: PageProps): JSX.Element => {
 					<SearchBar />
 					{openNewRecipeModal && (
 						<Modal
-							form={<FormikForm />}
-							// table={true}
-							// headers={newRecipeHeaders}
-							// fields={newRecipeFields}
+							form={
+								<FormikForm
+									setOpenNewRecipeModal={
+										setOpenNewRecipeModal
+									}
+								/>
+							}
 							title={"New Recipe"}
 							openStateFunction={setOpenNewRecipeModal}
 							openStateVariable={openNewRecipeModal}
-							// formStateFunction={setNewRecipeForm}
-							// formStateVariable={newRecipeForm}
 						/>
 					)}
-
-					<RecipeContainer column={true} />
+					{userRecipes.length != 0 ? (
+						<RecipeContainer column={true} />
+					) : (
+						<div className="flex justify-center items-center  ">
+							<p className="text-center">
+								"It looks like you don't have any recipes! Click
+								the 'New Recipe' button to get started."
+							</p>
+						</div>
+					)}
 				</div>
 			)}
 			{selected == "Groceries" && (
@@ -162,18 +170,15 @@ const Page = ({ title }: PageProps): JSX.Element => {
 			)}
 			{selected == "Account" && (
 				<div className={`p-3`}>
-					{!isAuthenticated ? (
-						<PageTitle title={"Login to your account"} />
-					) : (
-						<PageTitle title={title} />
-					)}
+					<PageTitle title={title} />
+
 					{error && <p>Authentication error</p>}
 					{!error && isLoading && <p>Loading...</p>}
 					{!error && !isLoading && (
 						<>
+							<Profile />
 							<LoginButton />
 							<LogoutButton />
-							<Profile />
 						</>
 					)}
 				</div>

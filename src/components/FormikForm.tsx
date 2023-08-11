@@ -4,9 +4,18 @@ import Input from "./Input";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import Button from "./Button";
 import { useAppSelector } from "../util/hooks";
+import { useAppDispatch } from "../store";
+import { setToggleFetchRecipes } from "../reducers/toggleSlice";
 
-const FormikForm = (): JSX.Element => {
-	const mongoUser = useAppSelector((state) => state.mongoUser.values);
+interface FormikFormProps {
+	setOpenNewRecipeModal: (bool: boolean) => void;
+}
+
+const FormikForm = ({
+	setOpenNewRecipeModal,
+}: FormikFormProps): JSX.Element => {
+	const dispatch = useAppDispatch();
+	const { values } = useAppSelector((state) => state.userDetails);
 	return (
 		<div className="md:w-3/4">
 			<Formik
@@ -34,7 +43,7 @@ const FormikForm = (): JSX.Element => {
 						},
 					],
 					tags: [""],
-					_id: mongoUser._id,
+					_id: values._id,
 				}}
 				validationSchema={Yup.object({
 					recipe_name: Yup.string().required("Required"),
@@ -54,6 +63,8 @@ const FormikForm = (): JSX.Element => {
 							}
 						);
 						resetForm();
+						setOpenNewRecipeModal(false);
+						dispatch(setToggleFetchRecipes());
 					}, 500)
 				}>
 				{({ isSubmitting }) => (
@@ -96,10 +107,31 @@ const FormikForm = (): JSX.Element => {
 								/>
 							</div>
 							<Input
+								label="Servings"
+								name="servings"
+								type="text"
+								placeholder="4"
+								xsm={true}
+							/>
+							<Input
+								label="Category"
+								name="category"
+								type="text"
+								placeholder="dinner"
+								sm={true}
+							/>
+							<Input
+								label="Image URL"
+								name="img"
+								type="text"
+								placeholder="http://image.jpg"
+								lg={true}
+							/>
+							<Input
 								label="Recipe Source*"
 								name="source"
 								type="text"
-								placeholder="recipes.com"
+								placeholder="http://recipes.com"
 								lg={true}
 							/>
 

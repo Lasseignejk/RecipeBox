@@ -1,37 +1,9 @@
 import { useEffect } from "react";
-import { recipes } from "../../util/recipes";
 import RecipeCard from "./RecipeCard";
 import { useAppDispatch } from "../../store";
-import { setAllRecipes } from "../../reducers/showMoreSlice";
-
-interface RecipeData {
-	recipe_name: string;
-	prep_time: number;
-	cook_time: number;
-	total_time: number;
-	servings: number;
-	category: string;
-	source: string;
-	img?: string;
-	ingredients: IngredientsData[];
-	instructions: InstructionsData[];
-	notes: string;
-	tags?: string[];
-}
-
-interface IngredientsData {
-	ingredient_name: string;
-	ingredient_amount: string | null;
-	ingredient_measurement: string | null;
-	ingredient_directions: string | null;
-	ingredient_total: string;
-	ingredient_category: string | null;
-}
-
-interface InstructionsData {
-	step: number;
-	instruction: string;
-}
+import { setAllRecipes } from "../../reducers/showRecipeDetailsSlice";
+import { useAppSelector } from "../../util/hooks";
+import { RecipeProps } from "../../util/interfaces";
 
 interface RecipeContainerProps {
 	column: boolean;
@@ -43,13 +15,19 @@ interface FormattedData {
 
 const RecipeContainer = ({ column }: RecipeContainerProps): JSX.Element => {
 	const dispatch = useAppDispatch();
+	const userRecipes: RecipeProps[] = useAppSelector(
+		(state) => state.userRecipes.userRecipes
+	);
+	console.log(userRecipes);
+
 	const columnClasses: string = column
 		? "flex flex-col gap-5"
 		: "flex flex-wrap gap-5 justify-center";
 
-	const formatRecipes = (recipes: RecipeData[]): FormattedData => {
+	// this adds the 'false' to each recipe and adds it to the setAllRecipes, in the showMore slice, to control the drop down.
+	const formatRecipes = (userRecipes: RecipeProps[]): FormattedData => {
 		let formattedData = {};
-		recipes.map(
+		userRecipes.map(
 			(recipe) =>
 				(formattedData = {
 					...formattedData,
@@ -58,7 +36,7 @@ const RecipeContainer = ({ column }: RecipeContainerProps): JSX.Element => {
 		);
 		return formattedData;
 	};
-	const recipeData: FormattedData = formatRecipes(recipes);
+	const recipeData: FormattedData = formatRecipes(userRecipes);
 
 	useEffect(() => {
 		dispatch(setAllRecipes(recipeData));
@@ -66,7 +44,7 @@ const RecipeContainer = ({ column }: RecipeContainerProps): JSX.Element => {
 
 	return (
 		<div className={`pt-3 ${columnClasses}`}>
-			{recipes.map((recipe, index) => (
+			{userRecipes.map((recipe: RecipeProps, index: number) => (
 				<RecipeCard data={recipe} key={index} column={column} />
 			))}
 		</div>

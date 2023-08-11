@@ -7,51 +7,28 @@ import { useAppDispatch } from "../../store";
 import { useAppSelector } from "../../util/hooks";
 import { setSelectedRecipe } from "../../reducers/SelectedSlice";
 import RecipeIngredient from "./RecipeIngredient";
-import { showRecipeFalse, showRecipeTrue } from "../../reducers/showMoreSlice";
+import {
+	showRecipeFalse,
+	showRecipeTrue,
+} from "../../reducers/showRecipeDetailsSlice";
 import { useState } from "react";
+import { RecipeProps } from "../../util/interfaces";
 
 interface RecipeCardProps {
-	data: RecipeData;
+	data: RecipeProps;
 	column: boolean;
-}
-
-interface RecipeData {
-	recipe_name: string;
-	prep_time: number;
-	cook_time: number;
-	total_time: number;
-	servings: number;
-	category: string;
-	source: string;
-	img?: string;
-	ingredients: IngredientsData[];
-	instructions: InstructionsData[];
-	notes: string;
-	tags?: string[];
-}
-
-interface IngredientsData {
-	ingredient_name: string;
-	ingredient_amount: string | null;
-	ingredient_measurement: string | null;
-	ingredient_directions: string | null;
-	ingredient_total: string;
-	ingredient_category: string | null;
-}
-
-interface InstructionsData {
-	step: number;
-	instruction: string;
 }
 
 const RecipeCard = ({ data, column }: RecipeCardProps): JSX.Element => {
 	const dispatch = useAppDispatch();
-	// const selectedRecipe = useAppSelector((state) => state.selected.recipe);
+
 	const showRecipe = useAppSelector((state) => state.showMore.showRecipe);
 
 	const [buttonClasses, setButtonClasses] = useState<string>("");
+
 	const [ingredientsClasses, setIngredientsClasses] =
 		useState<string>("hidden");
+
 	const columnClasses: string = column
 		? "recipe_card_horizontal gap-1"
 		: "recipe_card_vertical gap-1 w-full max-w-[350px]";
@@ -77,24 +54,30 @@ const RecipeCard = ({ data, column }: RecipeCardProps): JSX.Element => {
 	return (
 		<div
 			className={`relative ${columnClasses} bg-lightSurfConLow p-3 rounded-xl`}>
-			<Button
-				icon={<FaCaretDown />}
-				passedFunction={handleOpen}
-				outline={false}
-				absolute={true}
-				top="top-3"
-				right="right-3"
-				extraClasses={`${buttonClasses}`}
-			/>
-			{data.img && (
+			{data.ingredients[0].ingredient_name != "" && (
+				<Button
+					icon={<FaCaretDown />}
+					passedFunction={handleOpen}
+					outline={false}
+					absolute={true}
+					top="top-3"
+					right="right-3"
+					extraClasses={`${buttonClasses}`}
+				/>
+			)}
+
+			{data.img ? (
 				<img
 					src={data.img}
 					className={`recipe_img ${imageColumnClasses}`}
 				/>
+			) : (
+				<div
+					className={`recipe_img border-2 ${imageColumnClasses}`}></div>
 			)}
 
 			<h1
-				className={`font-bold recipe_title pl-1`}
+				className={`font-bold recipe_title pl-1 hover:cursor-pointer`}
 				onClick={() => dispatch(setSelectedRecipe(data.recipe_name))}>
 				{formatRecipeName(data.recipe_name, 26)}
 			</h1>
@@ -102,26 +85,29 @@ const RecipeCard = ({ data, column }: RecipeCardProps): JSX.Element => {
 			<div
 				className={`recipe_prep flex gap-2 items-center pl-1 justify-center text-[13px]`}>
 				<PiKnifeFill />
-				{formatTime(data.prep_time)}
+				{data.prep_time ? formatTime(parseInt(data.prep_time)) : ""}
 			</div>
 			<div
 				className={`recipe_cook flex gap-2 items-center justify-center text-[13px]`}>
 				<PiCookingPot />
-				{formatTime(data.cook_time)}
+				{data.cook_time ? formatTime(parseInt(data.cook_time)) : ""}
 			</div>
 			<div
 				className={`recipe_total flex gap-2 items-center justify-center text-[13px]`}>
 				<PiTimerBold />
-				{formatTime(data.total_time)}
+				{data.total_time ? formatTime(parseInt(data.total_time)) : ""}
 			</div>
 
-			{data.tags && (
+			{data.tags.length != 1 ? (
 				<div className={`recipe_tags flex gap-3 justify-center mt-2`}>
 					{data.tags.map((tag: string, index: number) => (
 						<Tag tag={tag} key={index} />
 					))}
 				</div>
+			) : (
+				""
 			)}
+
 			<div
 				className={`recipe_ingredients flex flex-col gap-1 pt-2 ${ingredientsClasses}`}>
 				{data.ingredients.map((ingredient, index) => (
