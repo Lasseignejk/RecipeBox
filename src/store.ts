@@ -6,6 +6,7 @@ import showMoreReducer from "./reducers/showRecipeDetailsSlice";
 import userReducer from "./reducers/UserSlice";
 import userDetailsReducer from "./reducers/userRecipesSlice";
 import toggleReducer from "./reducers/toggleSlice";
+import oneRecipeReducer from "./reducers/oneRecipeSlice";
 
 import { useDispatch } from "react-redux";
 
@@ -17,6 +18,7 @@ export const store = configureStore({
 		userDetails: userReducer,
 		userRecipes: userDetailsReducer,
 		toggle: toggleReducer,
+		recipe: oneRecipeReducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

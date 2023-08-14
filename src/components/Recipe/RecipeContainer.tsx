@@ -7,13 +7,19 @@ import { RecipeProps } from "../../util/interfaces";
 
 interface RecipeContainerProps {
 	column: boolean;
+	openStateFunction: (bool: boolean) => void;
+	openStateVariable: boolean;
 }
 
 interface FormattedData {
 	[recipeName: string]: boolean;
 }
 
-const RecipeContainer = ({ column }: RecipeContainerProps): JSX.Element => {
+const RecipeContainer = ({
+	column,
+	openStateFunction,
+	openStateVariable,
+}: RecipeContainerProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const userRecipes: RecipeProps[] = useAppSelector(
 		(state) => state.userRecipes.userRecipes
@@ -45,7 +51,13 @@ const RecipeContainer = ({ column }: RecipeContainerProps): JSX.Element => {
 	return (
 		<div className={`pt-3 ${columnClasses}`}>
 			{userRecipes.map((recipe: RecipeProps, index: number) => (
-				<RecipeCard data={recipe} key={index} column={column} />
+				<RecipeCard
+					data={recipe}
+					key={index}
+					column={column}
+					openStateFunction={openStateFunction}
+					openStateVariable={openStateVariable}
+				/>
 			))}
 		</div>
 	);

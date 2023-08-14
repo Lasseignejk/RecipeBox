@@ -12,12 +12,13 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import Profile from "./Profile";
 import { useAuth0 } from "@auth0/auth0-react";
-import FormikForm from "./FormikForm";
+import NewRecipeForm from "./NewRecipeForm";
 import { useNavigate } from "react-router-dom";
 import { setSelectedNav } from "../reducers/SelectedSlice";
 import { fetchUserRecipes } from "../reducers/userRecipesSlice";
 import { fetchUserDetails } from "../reducers/UserSlice";
 import { RecipeProps } from "../util/interfaces";
+import EditRecipeForm from "./EditRecipeForm";
 
 interface PageProps {
 	title: string;
@@ -48,6 +49,8 @@ const Page = ({ title }: PageProps): JSX.Element => {
 	const navigate = useNavigate();
 
 	const [openNewRecipeModal, setOpenNewRecipeModal] =
+		useState<boolean>(false);
+	const [openEditRecipeModal, setOpenEditRecipeModal] =
 		useState<boolean>(false);
 
 	const { isLoading, error, isAuthenticated, user } = useAuth0();
@@ -140,7 +143,7 @@ const Page = ({ title }: PageProps): JSX.Element => {
 					{openNewRecipeModal && (
 						<Modal
 							form={
-								<FormikForm
+								<NewRecipeForm
 									setOpenNewRecipeModal={
 										setOpenNewRecipeModal
 									}
@@ -151,8 +154,26 @@ const Page = ({ title }: PageProps): JSX.Element => {
 							openStateVariable={openNewRecipeModal}
 						/>
 					)}
+					{openEditRecipeModal && (
+						<Modal
+							form={
+								<EditRecipeForm
+									setOpenNewRecipeModal={
+										setOpenEditRecipeModal
+									}
+								/>
+							}
+							title={"Edit Recipe"}
+							openStateFunction={setOpenEditRecipeModal}
+							openStateVariable={openEditRecipeModal}
+						/>
+					)}
 					{userRecipes.length != 0 ? (
-						<RecipeContainer column={true} />
+						<RecipeContainer
+							column={true}
+							openStateFunction={setOpenEditRecipeModal}
+							openStateVariable={openEditRecipeModal}
+						/>
 					) : (
 						<div className="flex justify-center items-center  ">
 							<p className="text-center">

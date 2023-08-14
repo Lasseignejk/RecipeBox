@@ -14,10 +14,10 @@ interface InputProps {
 	smText?: boolean;
 }
 
-const NewInput = ({ label, ...props }: InputProps): JSX.Element => {
+const Input = ({ label, ...props }: InputProps): JSX.Element => {
 	const [field, meta] = useField(props);
 
-	const xsmClasses: string = props.xsm ? "w-14" : "";
+	const xsmClasses: string = props.xsm ? `w-14` : ``;
 	const smClasses: string = props.sm ? "w-24" : "";
 	const mdClasses: string = props.md ? "w-36" : "";
 	const lgClasses: string = props.lg ? "w-48" : "";
@@ -46,4 +46,4 @@ const NewInput = ({ label, ...props }: InputProps): JSX.Element => {
 	);
 };
 
-export default NewInput;
+export default Input;

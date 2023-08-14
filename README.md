@@ -57,6 +57,8 @@ Made with the Material Theme Builder Figma plugin from Google
 
 ## Learned:
 
+<strong>8/14/23</strong> -- Used the Formik docs to figure out how to populate a form with values (instead of a blank initial state) and let the user still edit the fields. This is crucial for the form to update a recipe. I originally over-complicated it, but it was actually just two things. The first was to set the initial values to the values from the database, and the second was to set `enableReinitialize` to `true` on the `<Formik />` tag itself. It even creates populated inputs for each ingredient/instruction, something I was a little worried it wouldn't do! And, because I just copied the newRecipe form, it has the toggle all set up so once the 'update' button is clicked, it triggers another database call and the updated information is shown at once. Later, I'd like to come back and see if I can make the new/update forms the same component. I think the only thing they differ in is what happens on submit, the text on the submit button, and the initial state.
+
 <strong>8/8/23</strong> -- Successfully hooked the form up to the database and figured out how to reset the form on submission by reading the Formik docs.
 
 <strong>8/7/23</strong> -- Used [this tutorial](https://www.youtube.com/watch?v=DYcqatriSNE) and the Formik docs to remake the new recipe form. Formik is a new library for me, and after the struggles of putting together the new recipe form from scratch, I'm excited to use it going forward.

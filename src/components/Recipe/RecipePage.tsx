@@ -37,14 +37,17 @@ const RecipePage = (): JSX.Element => {
 			<div>
 				<SectionTitle title={"Ingredients"} />
 				<ul className="pl-5">
-					{selectedUserRecipe.ingredients.map((ingredient) => (
-						<RecipeIngredient
-							data={ingredient}
-							textSm={false}
-							listStyle="none"
-							allowLineThrough={true}
-						/>
-					))}
+					{selectedUserRecipe.ingredients.map(
+						(ingredient, index: number) => (
+							<RecipeIngredient
+								data={ingredient}
+								textSm={false}
+								listStyle="none"
+								allowLineThrough={true}
+								key={index}
+							/>
+						)
+					)}
 				</ul>
 			</div>
 			<div>

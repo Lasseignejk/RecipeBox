@@ -11,7 +11,7 @@ interface FormikFormProps {
 	setOpenNewRecipeModal: (bool: boolean) => void;
 }
 
-const FormikForm = ({
+const NewRecipeForm = ({
 	setOpenNewRecipeModal,
 }: FormikFormProps): JSX.Element => {
 	const dispatch = useAppDispatch();
@@ -52,7 +52,7 @@ const FormikForm = ({
 				onSubmit={(values, { resetForm }) =>
 					setTimeout(async () => {
 						console.log(JSON.stringify(values, null, 2));
-						const response = await fetch(
+						await fetch(
 							import.meta.env.VITE_BACKEND + "/recipe/new",
 							{
 								method: "POST",
@@ -235,20 +235,6 @@ const FormikForm = ({
 													</div>
 												</div>
 												<div className="pt-[2px] hidden md:block">
-													{/* <div className="w-[100%] border-2 border-lightOutline hidden md:flex gap-3 bg-lightSurfConHigh rounded-lg">
-														<p className="w-24 text-sm grid place-items-center">
-															Amount
-														</p>
-														<p className="w-24 text-sm grid place-items-center">
-															Measurement
-														</p>
-														<p className="w-36  text-sm grid place-items-center">
-															Ingredient
-														</p>
-														<p className="w-24 text-sm grid place-items-center">
-															Instruction
-														</p>
-													</div> */}
 													{ingredients.map(
 														(
 															_: string,
@@ -394,4 +380,4 @@ const FormikForm = ({
 	);
 };
 
-export default FormikForm;
+export default NewRecipeForm;

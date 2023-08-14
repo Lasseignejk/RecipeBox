@@ -34,7 +34,7 @@ const Modal = ({
 					/>
 				)}
 
-				{title && <PageTitle title="New Recipe" />}
+				{title && <PageTitle title={title} />}
 				{form && form}
 				{text}
 			</div>

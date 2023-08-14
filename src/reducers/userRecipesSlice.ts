@@ -14,7 +14,6 @@ const initialState: UserInitialState = {
 export const fetchUserRecipes = createAsyncThunk(
 	"user/getRecipes",
 	async (id: string) => {
-		console.log("userId from frontend", id);
 		const response = await fetch(
 			import.meta.env.VITE_BACKEND + "/recipe/user/" + id,
 			{

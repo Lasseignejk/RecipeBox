@@ -35,7 +35,8 @@ body {
 		"img time-prep time-cook time-total"
 		"tags tags tags tags"
 		"buttons buttons buttons buttons"
-		"ingredients ingredients ingredients ingredients";
+		"ingredients ingredients ingredients ingredients"
+		"edit edit edit edit";
 	grid-template-columns: 3.5rem 1fr 1fr 1fr;
 }
 
@@ -47,7 +48,8 @@ body {
 		"time-prep time-cook time-total"
 		"tags tags tags"
 		"buttons buttons buttons"
-		"ingredients ingredients ingredients";
+		"ingredients ingredients ingredients"
+		"edit edit edit";
 	place-items: center;
 }
 
@@ -81,6 +83,10 @@ body {
 
 .recipe_ingredients {
 	grid-area: ingredients;
+}
+
+.recipe_edit {
+	grid-area: edit;
 }
 
 .form_input {

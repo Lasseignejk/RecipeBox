@@ -47,7 +47,10 @@ const Button = ({
 			type="button"
 			onClick={() => passedFunction()}
 			className={` ${outlineClasses} ${absoluteClasses} ${iconClasses} ${top} ${right} ${colorClasses} ${roundedClasses} ${defaultClasses} ${invertedClasses} ${extraClasses}`}>
-			{text ? text : icon}
+			<span className="flex items-center gap-1">
+				{icon ? icon : ""}
+				{text ? text : ""}
+			</span>
 		</button>
 	);
 };

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IngredientsProps } from "../../util/interfaces";
-import { FaBox, FaCheck, FaCheckSquare } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 
 interface RecipeIngredientProps {
 	data: IngredientsProps;

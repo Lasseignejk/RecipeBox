@@ -1,4 +1,4 @@
-import { FaCalendarPlus, FaCaretDown, FaPlus } from "react-icons/fa";
+import { FaCalendarPlus, FaCaretDown, FaEdit, FaPlus } from "react-icons/fa";
 import { PiCookingPot, PiKnifeFill, PiTimerBold } from "react-icons/pi";
 import { formatRecipeName, formatTime } from "../../util/functions";
 import Button from "../Button";
@@ -18,9 +18,16 @@ import { Link } from "react-router-dom";
 interface RecipeCardProps {
 	data: RecipeProps;
 	column: boolean;
+	openStateFunction: (bool: boolean) => void;
+	openStateVariable: boolean;
 }
 
-const RecipeCard = ({ data, column }: RecipeCardProps): JSX.Element => {
+const RecipeCard = ({
+	data,
+	column,
+	openStateFunction,
+	openStateVariable,
+}: RecipeCardProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const showRecipe = useAppSelector((state) => state.showMore.showRecipe);
@@ -51,6 +58,12 @@ const RecipeCard = ({ data, column }: RecipeCardProps): JSX.Element => {
 		dispatch(showRecipeFalse(data.recipe_name));
 		setButtonClasses("rotate-0 ease-in duration-200");
 		setIngredientsClasses("hidden");
+	};
+
+	const handleEditRecipe = (id: string) => {
+		console.log(id);
+		dispatch(setSelectedRecipe(id));
+		openStateFunction(!openStateVariable);
 	};
 	return (
 		<div
@@ -121,6 +134,14 @@ const RecipeCard = ({ data, column }: RecipeCardProps): JSX.Element => {
 						allowLineThrough={false}
 					/>
 				))}
+			</div>
+			<div className={`recipe_edit ${ingredientsClasses}`}>
+				<Button
+					text="Edit"
+					icon={<FaEdit />}
+					outline={true}
+					passedFunction={() => handleEditRecipe(data._id)}
+				/>
 			</div>
 
 			<div className="recipe_add_buttons flex justify-center gap-14 pt-2">
