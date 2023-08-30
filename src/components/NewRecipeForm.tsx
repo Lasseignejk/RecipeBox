@@ -1,7 +1,7 @@
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import Input from "./Input";
-import { FaPlus, FaTrash } from "react-icons/fa";
+import { FaPlus, FaTimes, FaTrash } from "react-icons/fa";
 import Button from "./Button";
 import { useAppSelector } from "../util/hooks";
 import { useAppDispatch } from "../store";
@@ -18,6 +18,15 @@ FormikFormProps): JSX.Element => {
 	const userInfo = useAppSelector((state) => state.userDetails.values);
 	return (
 		<div className="md:w-3/4">
+			<Button
+				outline={false}
+				passedFunction={() => dispatch(setOpenNewRecipeModal())}
+				icon={<FaTimes />}
+				absolute={true}
+				right="right-[20px]"
+				top="top-[20px]"
+				color="text-lightError"
+			/>
 			<Formik
 				initialValues={{
 					recipe_name: "",

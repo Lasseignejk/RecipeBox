@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../util/hooks";
 import PlanCalendar from "./PlanCalendar";
 import { TbFridge } from "react-icons/tb";
@@ -19,10 +19,7 @@ import { fetchUserRecipes } from "../reducers/userRecipesSlice";
 import { fetchUserDetails } from "../reducers/UserSlice";
 import { RecipeProps } from "../util/interfaces";
 import EditRecipeForm from "./EditRecipeForm";
-import {
-	setOpenEditModal,
-	setOpenNewRecipeModal,
-} from "../reducers/openModalSlice";
+import { setOpenNewRecipeModal } from "../reducers/openModalSlice";
 
 interface PageProps {
 	title: string;
@@ -51,11 +48,6 @@ interface UserObject {
 const Page = ({ title }: PageProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-
-	// const [openNewRecipeModal, setOpenNewRecipeModal] =
-	// 	useState<boolean>(false);
-	// const [openEditRecipeModal, setOpenEditRecipeModal] =
-	// 	useState<boolean>(false);
 
 	const { isLoading, error, isAuthenticated, user } = useAuth0();
 

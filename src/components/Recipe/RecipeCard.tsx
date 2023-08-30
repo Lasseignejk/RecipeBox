@@ -19,16 +19,9 @@ import { setOpenEditModal } from "../../reducers/openModalSlice";
 interface RecipeCardProps {
 	data: RecipeProps;
 	column: boolean;
-	// openStateFunction: (bool: boolean) => void;
-	// openStateVariable: boolean;
 }
 
-const RecipeCard = ({
-	data,
-	column,
-}: // openStateFunction,
-// openStateVariable,
-RecipeCardProps): JSX.Element => {
+const RecipeCard = ({ data, column }: RecipeCardProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const showRecipe = useAppSelector((state) => state.showMore.showRecipe);
@@ -64,7 +57,6 @@ RecipeCardProps): JSX.Element => {
 	const handleEditRecipe = (id: string) => {
 		dispatch(setSelectedRecipe(id));
 		dispatch(setOpenEditModal());
-		// openStateFunction(!openStateVariable);
 	};
 	return (
 		<div
@@ -94,7 +86,7 @@ RecipeCardProps): JSX.Element => {
 			<Link
 				to={`/recipes/${data.recipe_name}`}
 				className={`font-bold recipe_title pl-1 hover:cursor-pointer`}
-				onClick={() => dispatch(setSelectedRecipe(data.recipe_name))}>
+				onClick={() => dispatch(setSelectedRecipe(data._id as string))}>
 				{formatRecipeName(data.recipe_name, 26)}
 			</Link>
 

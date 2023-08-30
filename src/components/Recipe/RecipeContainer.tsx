@@ -7,19 +7,13 @@ import { RecipeProps } from "../../util/interfaces";
 
 interface RecipeContainerProps {
 	column: boolean;
-	// openStateFunction: (bool: boolean) => void;
-	// openStateVariable: boolean;
 }
 
 interface FormattedData {
 	[recipeName: string]: boolean;
 }
 
-const RecipeContainer = ({
-	column,
-}: // openStateFunction,
-// openStateVariable,
-RecipeContainerProps): JSX.Element => {
+const RecipeContainer = ({ column }: RecipeContainerProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const userRecipes: RecipeProps[] = useAppSelector(
 		(state) => state.userRecipes.userRecipes

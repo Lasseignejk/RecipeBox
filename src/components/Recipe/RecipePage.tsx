@@ -6,28 +6,33 @@ import SectionTitle from "../SectionTitle";
 import RecipeIngredient from "./RecipeIngredient";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useAppDispatch } from "../../store";
-import { setSelectedRecipe } from "../../reducers/SelectedSlice";
 import { setOpenEditModal } from "../../reducers/openModalSlice";
+import Modal from "../Modal";
+import EditRecipeForm from "../EditRecipeForm";
+import { useEffect } from "react";
+import { fetchRecipe } from "../../reducers/oneRecipeSlice";
 
 const RecipePage = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const selectedRecipe = useAppSelector((state) => state.selected.recipe);
+	console.log("recipe_page", selectedRecipe);
 	const userRecipes = useAppSelector(
 		(state) => state.userRecipes.userRecipes
 	);
+	const openEditRecipeModal: boolean = useAppSelector(
+		(state) => state.openModal.openEditModal
+	);
 
 	const selectedUserRecipe = userRecipes.filter(
-		(recipe) => recipe.recipe_name == selectedRecipe
+		(recipe) => recipe._id == selectedRecipe
 	)[0];
-	// useEffect(() => {
-	// 	dispatch(fetchRecipe(selectedRecipe));
-	// }, [selectedRecipe]);
+	useEffect(() => {
+		dispatch(fetchRecipe(selectedRecipe));
+	}, [selectedRecipe]);
 
 	const handleEditRecipe = () => {
-		// dispatch(setSelectedRecipe(selectedUserRecipe));
 		dispatch(setOpenEditModal());
-		// openStateFunction(!openStateVariable);
 	};
 	return (
 		<div className="p-3 flex flex-col gap-3 pb-20">
@@ -37,7 +42,10 @@ const RecipePage = (): JSX.Element => {
 				text="Back to all receipes"
 				extraClasses="text-sm w-[150px] border-[1px] rounded-full hover:shadow-lg ease-in duration-200"
 			/>
-			{selectedUserRecipe.img && (
+			{openEditRecipeModal && (
+				<Modal form={<EditRecipeForm />} title={"Edit Recipe"} />
+			)}
+			{selectedUserRecipe?.img && (
 				<div className="flex justify-center">
 					<img
 						src={selectedUserRecipe.img}
@@ -46,7 +54,7 @@ const RecipePage = (): JSX.Element => {
 					/>
 				</div>
 			)}
-			<PageTitle title={selectedRecipe} center={true} />
+			<PageTitle title={selectedUserRecipe?.recipe_name} center={true} />
 			<div>
 				<Button
 					text="Edit"
@@ -61,11 +69,11 @@ const RecipePage = (): JSX.Element => {
 					passedFunction={() => console.log("clicked")}
 				/>
 			</div>
-			<p>{selectedUserRecipe.source}</p>
+			<p>{selectedUserRecipe?.source}</p>
 			<div>
 				<SectionTitle title={"Ingredients"} />
 				<ul className="pl-5">
-					{selectedUserRecipe.ingredients.map(
+					{selectedUserRecipe?.ingredients.map(
 						(ingredient, index: number) => (
 							<RecipeIngredient
 								data={ingredient}
@@ -81,7 +89,7 @@ const RecipePage = (): JSX.Element => {
 			<div>
 				<SectionTitle title={"Instructions"} />
 				<ol className="pl-10">
-					{selectedUserRecipe.instructions.map((instruction) => (
+					{selectedUserRecipe?.instructions.map((instruction) => (
 						<li className={`list-decimal`}>
 							{instruction.instruction}
 						</li>

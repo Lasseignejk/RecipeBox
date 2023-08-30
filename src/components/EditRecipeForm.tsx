@@ -1,7 +1,7 @@
 import { Formik, Form, FieldArray, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import Input from "./Input";
-import { FaPlus, FaTrash } from "react-icons/fa";
+import { FaPlus, FaTimes, FaTrash } from "react-icons/fa";
 import Button from "./Button";
 import { useAppSelector } from "../util/hooks";
 import { useAppDispatch } from "../store";
@@ -15,11 +15,13 @@ const EditRecipeForm = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { values } = useAppSelector((state) => state.userDetails);
 	const selectedRecipe = useAppSelector((state) => state.selected.recipe);
+	console.log("editform", selectedRecipe);
 
 	const recipe = useAppSelector((state) => state.recipe.recipe);
 	useEffect(() => {
 		dispatch(fetchRecipe(selectedRecipe));
 	}, [selectedRecipe]);
+	console.log(recipe);
 
 	const {
 		recipe_name,
@@ -37,6 +39,15 @@ const EditRecipeForm = (): JSX.Element => {
 	} = recipe;
 	return (
 		<div className="md:w-3/4">
+			<Button
+				outline={false}
+				passedFunction={() => dispatch(setOpenEditModal())}
+				icon={<FaTimes />}
+				absolute={true}
+				right="right-[20px]"
+				top="top-[20px]"
+				color="text-lightError"
+			/>
 			<Formik
 				enableReinitialize={true}
 				initialValues={{
@@ -161,7 +172,7 @@ const EditRecipeForm = (): JSX.Element => {
 										return (
 											<>
 												<div className="md:hidden flex flex-col gap-3">
-													{ingredients.map(
+													{ingredients?.map(
 														(
 															_: string,
 															index: number
@@ -250,7 +261,7 @@ const EditRecipeForm = (): JSX.Element => {
 													</div>
 												</div>
 												<div className="pt-[2px] hidden md:block">
-													{ingredients.map(
+													{ingredients?.map(
 														(
 															_: string,
 															index: number
@@ -331,7 +342,7 @@ const EditRecipeForm = (): JSX.Element => {
 										const { instructions } = values;
 										return (
 											<div className="flex flex-col gap-2">
-												{instructions.map(
+												{instructions?.map(
 													(
 														_: string,
 														index: number
