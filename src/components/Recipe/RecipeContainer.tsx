@@ -7,18 +7,22 @@ import { RecipeProps } from "../../util/interfaces";
 
 interface RecipeContainerProps {
 	column: boolean;
+	searchRecipes: RecipeProps[];
+	setSearchRecipes: (arr: RecipeProps[]) => void;
 }
 
 interface FormattedData {
 	[recipeName: string]: boolean;
 }
 
-const RecipeContainer = ({ column }: RecipeContainerProps): JSX.Element => {
+const RecipeContainer = ({
+	column,
+	searchRecipes,
+}: RecipeContainerProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const userRecipes: RecipeProps[] = useAppSelector(
 		(state) => state.userRecipes.userRecipes
 	);
-	console.log(userRecipes);
 
 	const columnClasses: string = column
 		? "flex flex-col gap-5"
@@ -44,15 +48,13 @@ const RecipeContainer = ({ column }: RecipeContainerProps): JSX.Element => {
 
 	return (
 		<div className={`pt-3 ${columnClasses}`}>
-			{userRecipes.map((recipe: RecipeProps, index: number) => (
-				<RecipeCard
-					data={recipe}
-					key={index}
-					column={column}
-					// openStateFunction={openStateFunction}
-					// openStateVariable={openStateVariable}
-				/>
-			))}
+			{searchRecipes.length == 0
+				? userRecipes.map((recipe: RecipeProps, index: number) => (
+						<RecipeCard data={recipe} key={index} column={column} />
+				  ))
+				: searchRecipes.map((recipe: RecipeProps, index: number) => (
+						<RecipeCard data={recipe} key={index} column={column} />
+				  ))}
 		</div>
 	);
 };

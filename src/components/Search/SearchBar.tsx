@@ -1,7 +1,23 @@
-import React from "react";
 import { FaSearch } from "react-icons/fa";
+import { RecipeProps } from "../../util/interfaces";
+import { useAppSelector } from "../../util/hooks";
 
-const SearchBar = () => {
+interface SearchBarProps {
+	searchRecipes: RecipeProps[];
+	setSearchRecipes: (arr: RecipeProps[]) => void;
+}
+
+const SearchBar = ({ setSearchRecipes }: SearchBarProps): JSX.Element => {
+	const userRecipes: RecipeProps[] = useAppSelector(
+		(state) => state.userRecipes.userRecipes
+	);
+
+	const handleSearch = (str: string) => {
+		const filteredRecipes = userRecipes.filter((recipe) =>
+			recipe.recipe_name.toLowerCase().includes(str)
+		);
+		setSearchRecipes(filteredRecipes);
+	};
 	return (
 		<div className="flex justify-center">
 			<div
@@ -14,6 +30,7 @@ const SearchBar = () => {
 					type="text"
 					className={`outline-none bg-lightSurfConHigh`}
 					placeholder="Chicken Parmesan"
+					onChange={(e) => handleSearch(e.target.value)}
 				/>
 			</div>
 		</div>

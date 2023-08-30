@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../util/hooks";
 import PlanCalendar from "./PlanCalendar";
 import { TbFridge } from "react-icons/tb";
@@ -48,6 +48,8 @@ interface UserObject {
 const Page = ({ title }: PageProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
+
+	const [searchRecipes, setSearchRecipes] = useState<RecipeProps[]>([]);
 
 	const { isLoading, error, isAuthenticated, user } = useAuth0();
 
@@ -142,40 +144,24 @@ const Page = ({ title }: PageProps): JSX.Element => {
 						top="top-5"
 						right="right-3"
 					/>
-					<SearchBar />
+					<SearchBar
+						searchRecipes={searchRecipes}
+						setSearchRecipes={setSearchRecipes}
+					/>
 					{openNewRecipeModal && (
-						<Modal
-							form={
-								<NewRecipeForm
-								// setOpenNewRecipeModal={
-								// 	setOpenNewRecipeModal
-								// }
-								/>
-							}
-							title={"New Recipe"}
-							// openStateFunction={setOpenNewRecipeModal}
-							// openStateVariable={openNewRecipeModal}
-						/>
+						<Modal form={<NewRecipeForm />} title={"New Recipe"} />
 					)}
 					{openEditRecipeModal && (
 						<Modal
-							form={
-								<EditRecipeForm
-								// setOpenNewRecipeModal={
-								// 	setOpenEditRecipeModal
-								// }
-								/>
-							}
+							form={<EditRecipeForm />}
 							title={"Edit Recipe"}
-							// openStateFunction={setOpenEditRecipeModal}
-							// openStateVariable={openEditRecipeModal}
 						/>
 					)}
 					{userRecipes.length != 0 ? (
 						<RecipeContainer
 							column={true}
-							// openStateFunction={setOpenEditRecipeModal}
-							// openStateVariable={openEditRecipeModal}
+							searchRecipes={searchRecipes}
+							setSearchRecipes={setSearchRecipes}
 						/>
 					) : (
 						<div className="flex justify-center items-center  ">
