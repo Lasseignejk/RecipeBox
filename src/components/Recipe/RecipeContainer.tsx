@@ -7,8 +7,8 @@ import { RecipeProps } from "../../util/interfaces";
 
 interface RecipeContainerProps {
 	column: boolean;
-	openStateFunction: (bool: boolean) => void;
-	openStateVariable: boolean;
+	// openStateFunction: (bool: boolean) => void;
+	// openStateVariable: boolean;
 }
 
 interface FormattedData {
@@ -17,9 +17,9 @@ interface FormattedData {
 
 const RecipeContainer = ({
 	column,
-	openStateFunction,
-	openStateVariable,
-}: RecipeContainerProps): JSX.Element => {
+}: // openStateFunction,
+// openStateVariable,
+RecipeContainerProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const userRecipes: RecipeProps[] = useAppSelector(
 		(state) => state.userRecipes.userRecipes
@@ -55,8 +55,8 @@ const RecipeContainer = ({
 					data={recipe}
 					key={index}
 					column={column}
-					openStateFunction={openStateFunction}
-					openStateVariable={openStateVariable}
+					// openStateFunction={openStateFunction}
+					// openStateVariable={openStateVariable}
 				/>
 			))}
 		</div>

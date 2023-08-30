@@ -7,6 +7,7 @@ import userReducer from "./reducers/UserSlice";
 import userDetailsReducer from "./reducers/userRecipesSlice";
 import toggleReducer from "./reducers/toggleSlice";
 import oneRecipeReducer from "./reducers/oneRecipeSlice";
+import openModalReducer from "./reducers/openModalSlice";
 
 import { useDispatch } from "react-redux";
 
@@ -19,6 +20,7 @@ export const store = configureStore({
 		userRecipes: userDetailsReducer,
 		toggle: toggleReducer,
 		recipe: oneRecipeReducer,
+		openModal: openModalReducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

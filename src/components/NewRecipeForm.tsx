@@ -6,16 +6,16 @@ import Button from "./Button";
 import { useAppSelector } from "../util/hooks";
 import { useAppDispatch } from "../store";
 import { setToggleFetchRecipes } from "../reducers/toggleSlice";
+import { setOpenNewRecipeModal } from "../reducers/openModalSlice";
 
 interface FormikFormProps {
-	setOpenNewRecipeModal: (bool: boolean) => void;
+	// setOpenNewRecipeModal: (bool: boolean) => void;
 }
 
-const NewRecipeForm = ({
-	setOpenNewRecipeModal,
-}: FormikFormProps): JSX.Element => {
+const NewRecipeForm = ({}: // setOpenNewRecipeModal,
+FormikFormProps): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { values } = useAppSelector((state) => state.userDetails);
+	const userInfo = useAppSelector((state) => state.userDetails.values);
 	return (
 		<div className="md:w-3/4">
 			<Formik
@@ -43,7 +43,7 @@ const NewRecipeForm = ({
 						},
 					],
 					tags: [""],
-					_id: values._id,
+					_id: userInfo._id,
 				}}
 				validationSchema={Yup.object({
 					recipe_name: Yup.string().required("Required"),
@@ -51,7 +51,7 @@ const NewRecipeForm = ({
 				})}
 				onSubmit={(values, { resetForm }) =>
 					setTimeout(async () => {
-						console.log(JSON.stringify(values, null, 2));
+						// console.log(JSON.stringify(values, null, 2));
 						await fetch(
 							import.meta.env.VITE_BACKEND + "/recipe/new",
 							{
@@ -63,7 +63,8 @@ const NewRecipeForm = ({
 							}
 						);
 						resetForm();
-						setOpenNewRecipeModal(false);
+						// setOpenNewRecipeModal(false);
+						dispatch(setOpenNewRecipeModal());
 						dispatch(setToggleFetchRecipes());
 					}, 500)
 				}>

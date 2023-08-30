@@ -28,7 +28,7 @@ const Button = ({
 	extraClasses,
 }: ButtonProps): JSX.Element => {
 	const outlineClasses: string = outline
-		? "border-[1px] border-lightOutline px-4 text-sm rounded-xl hover:scale-105 duration-200 ease-in-out"
+		? "border-[1px] border-lightOutline px-4 text-sm rounded-xl hover:shadow-lg ease-in duration-200"
 		: "";
 	const absoluteClasses: string = absolute ? "absolute" : "";
 	const iconClasses: string = icon ? "text-lg" : "";
@@ -47,7 +47,7 @@ const Button = ({
 			type="button"
 			onClick={() => passedFunction()}
 			className={` ${outlineClasses} ${absoluteClasses} ${iconClasses} ${top} ${right} ${colorClasses} ${roundedClasses} ${defaultClasses} ${invertedClasses} ${extraClasses}`}>
-			<span className="flex items-center gap-1">
+			<span className="flex items-center gap-1 justify-center">
 				{icon ? icon : ""}
 				{text ? text : ""}
 			</span>

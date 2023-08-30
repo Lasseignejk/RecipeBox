@@ -4,8 +4,13 @@ import PageTitle from "../PageTitle";
 import { useNavigate } from "react-router-dom";
 import SectionTitle from "../SectionTitle";
 import RecipeIngredient from "./RecipeIngredient";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { useAppDispatch } from "../../store";
+import { setSelectedRecipe } from "../../reducers/SelectedSlice";
+import { setOpenEditModal } from "../../reducers/openModalSlice";
 
 const RecipePage = (): JSX.Element => {
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const selectedRecipe = useAppSelector((state) => state.selected.recipe);
 	const userRecipes = useAppSelector(
@@ -15,6 +20,15 @@ const RecipePage = (): JSX.Element => {
 	const selectedUserRecipe = userRecipes.filter(
 		(recipe) => recipe.recipe_name == selectedRecipe
 	)[0];
+	// useEffect(() => {
+	// 	dispatch(fetchRecipe(selectedRecipe));
+	// }, [selectedRecipe]);
+
+	const handleEditRecipe = () => {
+		// dispatch(setSelectedRecipe(selectedUserRecipe));
+		dispatch(setOpenEditModal());
+		// openStateFunction(!openStateVariable);
+	};
 	return (
 		<div className="p-3 flex flex-col gap-3 pb-20">
 			<Button
@@ -28,11 +42,25 @@ const RecipePage = (): JSX.Element => {
 					<img
 						src={selectedUserRecipe.img}
 						alt={selectedUserRecipe.recipe_name}
-						className="rounded-xl"
+						className="rounded-xl  w-[300px] h-[300px] object-cover"
 					/>
 				</div>
 			)}
 			<PageTitle title={selectedRecipe} center={true} />
+			<div>
+				<Button
+					text="Edit"
+					icon={<FaEdit />}
+					outline={true}
+					passedFunction={() => handleEditRecipe()}
+				/>
+				<Button
+					text="Delete"
+					icon={<FaTrash />}
+					outline={true}
+					passedFunction={() => console.log("clicked")}
+				/>
+			</div>
 			<p>{selectedUserRecipe.source}</p>
 			<div>
 				<SectionTitle title={"Ingredients"} />

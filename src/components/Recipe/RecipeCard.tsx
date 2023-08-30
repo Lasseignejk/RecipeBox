@@ -14,20 +14,21 @@ import {
 import { useState } from "react";
 import { RecipeProps } from "../../util/interfaces";
 import { Link } from "react-router-dom";
+import { setOpenEditModal } from "../../reducers/openModalSlice";
 
 interface RecipeCardProps {
 	data: RecipeProps;
 	column: boolean;
-	openStateFunction: (bool: boolean) => void;
-	openStateVariable: boolean;
+	// openStateFunction: (bool: boolean) => void;
+	// openStateVariable: boolean;
 }
 
 const RecipeCard = ({
 	data,
 	column,
-	openStateFunction,
-	openStateVariable,
-}: RecipeCardProps): JSX.Element => {
+}: // openStateFunction,
+// openStateVariable,
+RecipeCardProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const showRecipe = useAppSelector((state) => state.showMore.showRecipe);
@@ -61,9 +62,9 @@ const RecipeCard = ({
 	};
 
 	const handleEditRecipe = (id: string) => {
-		console.log(id);
 		dispatch(setSelectedRecipe(id));
-		openStateFunction(!openStateVariable);
+		dispatch(setOpenEditModal());
+		// openStateFunction(!openStateVariable);
 	};
 	return (
 		<div
@@ -140,7 +141,7 @@ const RecipeCard = ({
 					text="Edit"
 					icon={<FaEdit />}
 					outline={true}
-					passedFunction={() => handleEditRecipe(data._id)}
+					passedFunction={() => handleEditRecipe(data._id as string)}
 				/>
 			</div>
 

@@ -19,6 +19,10 @@ import { fetchUserRecipes } from "../reducers/userRecipesSlice";
 import { fetchUserDetails } from "../reducers/UserSlice";
 import { RecipeProps } from "../util/interfaces";
 import EditRecipeForm from "./EditRecipeForm";
+import {
+	setOpenEditModal,
+	setOpenNewRecipeModal,
+} from "../reducers/openModalSlice";
 
 interface PageProps {
 	title: string;
@@ -48,14 +52,23 @@ const Page = ({ title }: PageProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
-	const [openNewRecipeModal, setOpenNewRecipeModal] =
-		useState<boolean>(false);
-	const [openEditRecipeModal, setOpenEditRecipeModal] =
-		useState<boolean>(false);
+	// const [openNewRecipeModal, setOpenNewRecipeModal] =
+	// 	useState<boolean>(false);
+	// const [openEditRecipeModal, setOpenEditRecipeModal] =
+	// 	useState<boolean>(false);
 
 	const { isLoading, error, isAuthenticated, user } = useAuth0();
 
 	const selected: string = useAppSelector((state) => state.selected.nav);
+
+	const openEditRecipeModal: boolean = useAppSelector(
+		(state) => state.openModal.openEditModal
+	);
+
+	const openNewRecipeModal: boolean = useAppSelector(
+		(state) => state.openModal.openNewRecipeModal
+	);
+
 	const userRecipes: RecipeProps[] = useAppSelector(
 		(state) => state.userRecipes.userRecipes
 	);
@@ -131,9 +144,7 @@ const Page = ({ title }: PageProps): JSX.Element => {
 					<PageTitle title={title} />
 					<Button
 						text={"New Recipe"}
-						passedFunction={() =>
-							setOpenNewRecipeModal(!openNewRecipeModal)
-						}
+						passedFunction={() => dispatch(setOpenNewRecipeModal())}
 						outline={true}
 						absolute={true}
 						top="top-5"
@@ -144,35 +155,35 @@ const Page = ({ title }: PageProps): JSX.Element => {
 						<Modal
 							form={
 								<NewRecipeForm
-									setOpenNewRecipeModal={
-										setOpenNewRecipeModal
-									}
+								// setOpenNewRecipeModal={
+								// 	setOpenNewRecipeModal
+								// }
 								/>
 							}
 							title={"New Recipe"}
-							openStateFunction={setOpenNewRecipeModal}
-							openStateVariable={openNewRecipeModal}
+							// openStateFunction={setOpenNewRecipeModal}
+							// openStateVariable={openNewRecipeModal}
 						/>
 					)}
 					{openEditRecipeModal && (
 						<Modal
 							form={
 								<EditRecipeForm
-									setOpenNewRecipeModal={
-										setOpenEditRecipeModal
-									}
+								// setOpenNewRecipeModal={
+								// 	setOpenEditRecipeModal
+								// }
 								/>
 							}
 							title={"Edit Recipe"}
-							openStateFunction={setOpenEditRecipeModal}
-							openStateVariable={openEditRecipeModal}
+							// openStateFunction={setOpenEditRecipeModal}
+							// openStateVariable={openEditRecipeModal}
 						/>
 					)}
 					{userRecipes.length != 0 ? (
 						<RecipeContainer
 							column={true}
-							openStateFunction={setOpenEditRecipeModal}
-							openStateVariable={openEditRecipeModal}
+							// openStateFunction={setOpenEditRecipeModal}
+							// openStateVariable={openEditRecipeModal}
 						/>
 					) : (
 						<div className="flex justify-center items-center  ">

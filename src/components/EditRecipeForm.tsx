@@ -1,4 +1,4 @@
-import { Formik, Form, FieldArray } from "formik";
+import { Formik, Form, FieldArray, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import Input from "./Input";
 import { FaPlus, FaTrash } from "react-icons/fa";
@@ -8,14 +8,10 @@ import { useAppDispatch } from "../store";
 import { setToggleFetchRecipes } from "../reducers/toggleSlice";
 import { fetchRecipe } from "../reducers/oneRecipeSlice";
 import { useEffect } from "react";
+import { setOpenEditModal } from "../reducers/openModalSlice";
+import { RecipeProps } from "../util/interfaces";
 
-interface FormikFormProps {
-	setOpenNewRecipeModal: (bool: boolean) => void;
-}
-
-const EditRecipeForm = ({
-	setOpenNewRecipeModal,
-}: FormikFormProps): JSX.Element => {
+const EditRecipeForm = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { values } = useAppSelector((state) => state.userDetails);
 	const selectedRecipe = useAppSelector((state) => state.selected.recipe);
@@ -55,6 +51,7 @@ const EditRecipeForm = ({
 					ingredients,
 					instructions,
 					tags,
+					notes,
 					_id: recipe._id,
 					author: values._id,
 				}}
@@ -62,9 +59,11 @@ const EditRecipeForm = ({
 					recipe_name: Yup.string().required("Required"),
 					source: Yup.string().required("Required"),
 				})}
-				onSubmit={(values, { resetForm }) =>
+				onSubmit={(
+					values: RecipeProps,
+					actions: FormikHelpers<RecipeProps>
+				) =>
 					setTimeout(async () => {
-						console.log(JSON.stringify(values, null, 2));
 						await fetch(
 							import.meta.env.VITE_BACKEND +
 								"/recipe/update/" +
@@ -77,8 +76,9 @@ const EditRecipeForm = ({
 								body: JSON.stringify(values),
 							}
 						);
-						resetForm();
-						setOpenNewRecipeModal(false);
+						actions.resetForm();
+						dispatch(setOpenEditModal());
+						// setOpenNewRecipeModal(false);
 						dispatch(setToggleFetchRecipes());
 					}, 500)
 				}>
