@@ -10,6 +10,7 @@ import oneRecipeReducer from "./reducers/oneRecipeSlice";
 import openModalReducer from "./reducers/openModalSlice";
 
 import { useDispatch } from "react-redux";
+import userTagsReducer from "./reducers/userTagsSlice";
 
 export const store = configureStore({
 	reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
 		toggle: toggleReducer,
 		recipe: oneRecipeReducer,
 		openModal: openModalReducer,
+		userTags: userTagsReducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

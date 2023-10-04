@@ -12,7 +12,7 @@ const CalendarSmallDate = ({ date }: CalendarProps): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const selectedDay = useAppSelector((state) => state.today.selectedDay);
 	const dayOfWeek: string = date.date.slice(0, 3);
-	const month: string = date.date.slice(4, 7);
+	// const month: string = date.date.slice(4, 7);
 	const dateNum: string = date.date.slice(8, 10);
 	// console.log(selectedDay);
 
@@ -35,7 +35,7 @@ const CalendarSmallDate = ({ date }: CalendarProps): JSX.Element => {
 	return (
 		<div
 			data-testid="date"
-			className={`flex flex-col w-full items-center  ${todayClasses} ${selectedClasses} `}
+			className={`flex flex-col w-full items-center hover:cursor-pointer  ${todayClasses} ${selectedClasses} `}
 			onClick={() => dispatch(updateSelectedDay(date.date))}>
 			<p className={`text-sm`}>{dayOfWeek}</p>
 			<p className={`text-xl`}>{formatDateNum(dateNum)}</p>

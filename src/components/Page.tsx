@@ -20,6 +20,7 @@ import { fetchUserDetails } from "../reducers/UserSlice";
 import { RecipeProps } from "../util/interfaces";
 import EditRecipeForm from "./EditRecipeForm";
 import { setOpenNewRecipeModal } from "../reducers/openModalSlice";
+import { fetchUserTags } from "../reducers/userTagsSlice";
 
 interface PageProps {
 	title: string;
@@ -75,6 +76,7 @@ const Page = ({ title }: PageProps): JSX.Element => {
 	): Promise<void> => {
 		const data = await dispatch(fetchUserDetails(user));
 		await dispatch(fetchUserRecipes(data.payload._id));
+		await dispatch(fetchUserTags(data.payload._id));
 	};
 
 	useEffect(() => {

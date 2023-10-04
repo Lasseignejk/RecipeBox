@@ -145,6 +145,8 @@ const RecipeCard = ({ data, column }: RecipeCardProps): JSX.Element => {
 					color={""}
 					style={"inverted"}
 					rounded={false}
+					text={"Collection"}
+					extraClasses={"text-sm relative"}
 				/>
 				<Button
 					icon={<FaCalendarPlus />}
@@ -154,6 +156,8 @@ const RecipeCard = ({ data, column }: RecipeCardProps): JSX.Element => {
 					outline={false}
 					color={"bg-lightSecondary text-lightSurfConLow"}
 					rounded={true}
+					text={"Calendar"}
+					extraClasses={"text-sm"}
 				/>
 			</div>
 		</div>
