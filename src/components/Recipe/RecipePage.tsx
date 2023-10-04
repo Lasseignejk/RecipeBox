@@ -47,7 +47,7 @@ const RecipePage = (): JSX.Element => {
 					<Button
 						passedFunction={() => navigate(-1)}
 						outline={false}
-						text="Back to all receipes"
+						text="Back to all recipes"
 						extraClasses="text-sm w-[150px] border-[1px] rounded-full hover:shadow-lg ease-in duration-200"
 					/>
 					{openEditRecipeModal && (
