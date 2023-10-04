@@ -124,78 +124,90 @@ const Page = ({ title }: PageProps): JSX.Element => {
 		navigate("/");
 	};
 	return (
-		<div className={`pb-20`}>
-			{selected == "Plan" && isAuthenticated && (
-				<>
-					<PlanCalendar />
-					<div className="flex flex-col gap-5 p-3">
-						{cards.map((card: CardsProps, index: number) => (
-							<PlanCard card={card} key={index} />
-						))}
-					</div>
-				</>
-			)}
-			{selected == "Recipes" && (
-				<div className={`p-3 flex flex-col gap-2`}>
-					<PageTitle title={title} />
-					<Button
-						text={"New Recipe"}
-						passedFunction={() => dispatch(setOpenNewRecipeModal())}
-						outline={true}
-						absolute={true}
-						top="top-5"
-						right="right-3"
-					/>
-					<SearchBar
-						searchRecipes={searchRecipes}
-						setSearchRecipes={setSearchRecipes}
-					/>
-					{openNewRecipeModal && (
-						<Modal form={<NewRecipeForm />} title={"New Recipe"} />
+		<>
+			{isAuthenticated && (
+				<div className={`pb-20`}>
+					{selected == "Plan" && (
+						<>
+							<PlanCalendar />
+							<div className="flex flex-col gap-5 p-3">
+								{cards.map(
+									(card: CardsProps, index: number) => (
+										<PlanCard card={card} key={index} />
+									)
+								)}
+							</div>
+						</>
 					)}
-					{openEditRecipeModal && (
-						<Modal
-							form={<EditRecipeForm />}
-							title={"Edit Recipe"}
-						/>
+					{selected == "Recipes" && (
+						<div className={`p-3 flex flex-col gap-2`}>
+							<PageTitle title={title} />
+							<Button
+								text={"New Recipe"}
+								passedFunction={() =>
+									dispatch(setOpenNewRecipeModal())
+								}
+								outline={true}
+								absolute={true}
+								top="top-5"
+								right="right-3"
+							/>
+							<SearchBar
+								searchRecipes={searchRecipes}
+								setSearchRecipes={setSearchRecipes}
+							/>
+							{openNewRecipeModal && (
+								<Modal
+									form={<NewRecipeForm />}
+									title={"New Recipe"}
+								/>
+							)}
+							{openEditRecipeModal && (
+								<Modal
+									form={<EditRecipeForm />}
+									title={"Edit Recipe"}
+								/>
+							)}
+							{userRecipes.length != 0 ? (
+								<RecipeContainer
+									column={true}
+									searchRecipes={searchRecipes}
+									setSearchRecipes={setSearchRecipes}
+								/>
+							) : (
+								<div className="flex justify-center items-center  ">
+									<p className="text-center">
+										"It looks like you don't have any
+										recipes! Click the 'New Recipe' button
+										to get started."
+									</p>
+								</div>
+							)}
+						</div>
 					)}
-					{userRecipes.length != 0 ? (
-						<RecipeContainer
-							column={true}
-							searchRecipes={searchRecipes}
-							setSearchRecipes={setSearchRecipes}
-						/>
-					) : (
-						<div className="flex justify-center items-center  ">
-							<p className="text-center">
-								"It looks like you don't have any recipes! Click
-								the 'New Recipe' button to get started."
-							</p>
+					{selected == "Groceries" && (
+						<div className={`p-3`}>
+							<PageTitle title={title} />
+						</div>
+					)}
+					{selected == "Account" && (
+						<div className={`p-3`}>
+							<PageTitle title={title} />
+
+							{error && <p>Authentication error</p>}
+							{!error && isLoading && <p>Loading...</p>}
+							{!error && !isLoading && (
+								<>
+									<Profile />
+									<LoginButton />
+									<LogoutButton />
+								</>
+							)}
 						</div>
 					)}
 				</div>
 			)}
-			{selected == "Groceries" && (
-				<div className={`p-3`}>
-					<PageTitle title={title} />
-				</div>
-			)}
-			{selected == "Account" && (
-				<div className={`p-3`}>
-					<PageTitle title={title} />
-
-					{error && <p>Authentication error</p>}
-					{!error && isLoading && <p>Loading...</p>}
-					{!error && !isLoading && (
-						<>
-							<Profile />
-							<LoginButton />
-							<LogoutButton />
-						</>
-					)}
-				</div>
-			)}
-		</div>
+		</>
 	);
 };
 

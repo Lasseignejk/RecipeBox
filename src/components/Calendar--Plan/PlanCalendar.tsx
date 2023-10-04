@@ -1,4 +1,4 @@
-import CalandarSmallDate from "./CalendarSmallDate";
+import CalendarSmallDate from "./CalendarSmallDate";
 import { useAppSelector } from "../../util/hooks";
 import CalendarNav from "./CalendarNav";
 
@@ -12,7 +12,7 @@ const PlanCalendar = (): JSX.Element => {
 			<CalendarNav />
 			<div className="flex justify-around px-1">
 				{currentWeek.map((date, index) => (
-					<CalandarSmallDate date={date} key={index} />
+					<CalendarSmallDate date={date} key={index} />
 				))}
 			</div>
 		</div>
