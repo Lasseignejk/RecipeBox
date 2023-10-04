@@ -45,18 +45,23 @@ const AllAccessPage = ({ title }: PageProps): JSX.Element => {
 		if (isAuthenticated && user) {
 			console.log("user authenticated");
 			getUserDetailsAndRecipes(user);
+			dispatch(setSelectedNav("Plan"));
 			navigate("/plan");
 		}
 	});
 	return (
-		<div className="pb-20">
-			{selected == "Home" && <PageTitle title={title} />}
+		<div className="pb-20 p-3 flex flex-col gap-5 items-start">
+			{selected == "Home" && (
+				<>
+					<PageTitle title={"Welcome to My Recipe Box!"} />
+				</>
+			)}
 			{selected == "About" && <PageTitle title={title} />}
 			{selected == "Login" && (
-				<div>
-					<PageTitle title={title} />
+				<>
+					<PageTitle title={"Login to your account"} />
 					<LoginButton />
-				</div>
+				</>
 			)}
 		</div>
 	);

@@ -7,7 +7,13 @@ const Profile = () => {
 	return (
 		isAuthenticated && (
 			<article>
-				{user?.picture && <img src={user.picture} alt={user?.name} />}
+				{user?.picture && (
+					<img
+						src={user.picture}
+						alt={user?.name}
+						className="rounded-full"
+					/>
+				)}
 				<h2>{user?.name}</h2>
 			</article>
 		)

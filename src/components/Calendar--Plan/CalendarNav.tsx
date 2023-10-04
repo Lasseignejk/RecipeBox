@@ -1,10 +1,10 @@
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
-import { useAppDispatch, useAppSelector } from "../util/hooks";
+import { useAppDispatch, useAppSelector } from "../../util/hooks";
 import {
 	decrementCounter,
 	incrementCounter,
 	updateCurrentWeek,
-} from "../reducers/TodaySlice";
+} from "../../reducers/TodaySlice";
 
 interface MonthsData {
 	[key: string]: string;

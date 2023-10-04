@@ -1,26 +1,47 @@
-import { Formik, Form, FieldArray } from "formik";
+import { Formik, Form, FieldArray, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import Input from "./Input";
+import Input from "../Input";
 import { FaPlus, FaTimes, FaTrash } from "react-icons/fa";
-import Button from "./Button";
-import { useAppSelector } from "../util/hooks";
-import { useAppDispatch } from "../store";
-import { setToggleFetchRecipes } from "../reducers/toggleSlice";
-import { setOpenNewRecipeModal } from "../reducers/openModalSlice";
+import Button from "../Button";
+import { useAppSelector } from "../../util/hooks";
+import { useAppDispatch } from "../../store";
+import { setToggleFetchRecipes } from "../../reducers/toggleSlice";
+import { fetchRecipe } from "../../reducers/oneRecipeSlice";
+import { useEffect } from "react";
+import { setOpenEditModal } from "../../reducers/openModalSlice";
+import { RecipeProps } from "../../util/interfaces";
 
-interface FormikFormProps {
-	// setOpenNewRecipeModal: (bool: boolean) => void;
-}
-
-const NewRecipeForm = ({}: // setOpenNewRecipeModal,
-FormikFormProps): JSX.Element => {
+const EditRecipeForm = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const userInfo = useAppSelector((state) => state.userDetails.values);
+	const { values } = useAppSelector((state) => state.userDetails);
+	const selectedRecipe = useAppSelector((state) => state.selected.recipe);
+	console.log("editform", selectedRecipe);
+
+	const recipe = useAppSelector((state) => state.recipe.recipe);
+	useEffect(() => {
+		dispatch(fetchRecipe(selectedRecipe));
+	}, [selectedRecipe]);
+	console.log(recipe);
+
+	const {
+		recipe_name,
+		prep_time,
+		cook_time,
+		total_time,
+		servings,
+		category,
+		source,
+		img,
+		ingredients,
+		instructions,
+		tags,
+		notes,
+	} = recipe;
 	return (
 		<div className="md:w-3/4">
 			<Button
 				outline={false}
-				passedFunction={() => dispatch(setOpenNewRecipeModal())}
+				passedFunction={() => dispatch(setOpenEditModal())}
 				icon={<FaTimes />}
 				absolute={true}
 				right="right-[20px]"
@@ -28,41 +49,36 @@ FormikFormProps): JSX.Element => {
 				color="text-lightError"
 			/>
 			<Formik
+				enableReinitialize={true}
 				initialValues={{
-					recipe_name: "",
-					prep_time: "",
-					cook_time: "",
-					total_time: "",
-					servings: "",
-					category: "",
-					source: "",
-					img: "",
-					ingredients: [
-						{
-							ingredient_amount: "",
-							ingredient_measurement: "",
-							ingredient_name: "",
-							ingredient_directions: "",
-						},
-					],
-					instructions: [
-						{
-							step: 1,
-							instruction: "",
-						},
-					],
-					tags: [""],
-					_id: userInfo._id,
+					recipe_name,
+					prep_time,
+					cook_time,
+					total_time,
+					servings,
+					category,
+					source,
+					img,
+					ingredients,
+					instructions,
+					tags,
+					notes,
+					_id: recipe._id,
+					author: values._id,
 				}}
 				validationSchema={Yup.object({
 					recipe_name: Yup.string().required("Required"),
 					source: Yup.string().required("Required"),
 				})}
-				onSubmit={(values, { resetForm }) =>
+				onSubmit={(
+					values: RecipeProps,
+					actions: FormikHelpers<RecipeProps>
+				) =>
 					setTimeout(async () => {
-						// console.log(JSON.stringify(values, null, 2));
 						await fetch(
-							import.meta.env.VITE_BACKEND + "/recipe/new",
+							import.meta.env.VITE_BACKEND +
+								"/recipe/update/" +
+								recipe._id,
 							{
 								method: "POST",
 								headers: {
@@ -71,9 +87,9 @@ FormikFormProps): JSX.Element => {
 								body: JSON.stringify(values),
 							}
 						);
-						resetForm();
+						actions.resetForm();
+						dispatch(setOpenEditModal());
 						// setOpenNewRecipeModal(false);
-						dispatch(setOpenNewRecipeModal());
 						dispatch(setToggleFetchRecipes());
 					}, 500)
 				}>
@@ -156,7 +172,7 @@ FormikFormProps): JSX.Element => {
 										return (
 											<>
 												<div className="md:hidden flex flex-col gap-3">
-													{ingredients.map(
+													{ingredients?.map(
 														(
 															_: string,
 															index: number
@@ -245,7 +261,7 @@ FormikFormProps): JSX.Element => {
 													</div>
 												</div>
 												<div className="pt-[2px] hidden md:block">
-													{ingredients.map(
+													{ingredients?.map(
 														(
 															_: string,
 															index: number
@@ -326,7 +342,7 @@ FormikFormProps): JSX.Element => {
 										const { instructions } = values;
 										return (
 											<div className="flex flex-col gap-2">
-												{instructions.map(
+												{instructions?.map(
 													(
 														_: string,
 														index: number
@@ -379,7 +395,7 @@ FormikFormProps): JSX.Element => {
 									type="submit"
 									disabled={isSubmitting}
 									className={`font-bold rounded-xl border-2 w-1/3 py-1 mt-3  text-lightSurfCon bg-lightPrimary duration-200 ease-in-out hover:scale-105 hover:shadow-lg `}>
-									Create
+									Update
 								</button>
 							</div>
 						</div>
@@ -390,4 +406,4 @@ FormikFormProps): JSX.Element => {
 	);
 };
 
-export default NewRecipeForm;
+export default EditRecipeForm;

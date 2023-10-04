@@ -5,7 +5,11 @@ const LoginButton = () => {
 
 	return (
 		!isAuthenticated && (
-			<button onClick={() => loginWithRedirect()}>Login</button>
+			<button
+				className="border-[1px] border-lightOutline px-4 rounded-full hover:text-lightSurfCon hover:bg-lightTertiary hover:border-lightTertiary"
+				onClick={() => loginWithRedirect()}>
+				Login with your Google account
+			</button>
 		)
 	);
 };

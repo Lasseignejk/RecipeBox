@@ -1,8 +1,8 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../util/hooks";
-import PlanCalendar from "./PlanCalendar";
+import PlanCalendar from "./Calendar--Plan/PlanCalendar";
 import { TbFridge } from "react-icons/tb";
-import PlanCard from "./PlanCard";
+import PlanCard from "./Calendar--Plan/PlanCard";
 import PageTitle from "./PageTitle";
 import Button from "./Button";
 import RecipeContainer from "./Recipe/RecipeContainer";
@@ -12,13 +12,13 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import Profile from "./Profile";
 import { useAuth0 } from "@auth0/auth0-react";
-import NewRecipeForm from "./NewRecipeForm";
+import NewRecipeForm from "./Forms/NewRecipeForm";
 import { useNavigate } from "react-router-dom";
 import { setSelectedNav } from "../reducers/SelectedSlice";
 import { fetchUserRecipes } from "../reducers/userRecipesSlice";
 import { fetchUserDetails } from "../reducers/UserSlice";
 import { RecipeProps } from "../util/interfaces";
-import EditRecipeForm from "./EditRecipeForm";
+import EditRecipeForm from "./Forms/EditRecipeForm";
 import { setOpenNewRecipeModal } from "../reducers/openModalSlice";
 import { fetchUserTags } from "../reducers/userTagsSlice";
 

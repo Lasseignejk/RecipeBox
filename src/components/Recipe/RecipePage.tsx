@@ -8,7 +8,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useAppDispatch } from "../../store";
 import { setOpenEditModal } from "../../reducers/openModalSlice";
 import Modal from "../Modal";
-import EditRecipeForm from "../EditRecipeForm";
+import EditRecipeForm from "../Forms/EditRecipeForm";
 import { useEffect } from "react";
 import { fetchRecipe } from "../../reducers/oneRecipeSlice";
 

@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import CalendarSmallDate from "../components/CalendarSmallDate";
+import CalendarSmallDate from "../components/Calendar--Plan/CalendarSmallDate";
 import { describe, expect, it } from "vitest";
 
 describe("CalendarSmallDate", () => {

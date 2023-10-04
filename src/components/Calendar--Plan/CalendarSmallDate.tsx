@@ -1,5 +1,5 @@
-import { updateSelectedDay } from "../reducers/TodaySlice";
-import { useAppDispatch, useAppSelector } from "../util/hooks";
+import { updateSelectedDay } from "../../reducers/TodaySlice";
+import { useAppDispatch, useAppSelector } from "../../util/hooks";
 interface CalendarProps {
 	date: {
 		date: string;
