@@ -1,4 +1,4 @@
-import { Formik, Form, FieldArray, FormikHelpers } from "formik";
+import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import Input from "../Input";
 import { FaPlus, FaTimes, FaTrash } from "react-icons/fa";
@@ -15,13 +15,11 @@ const EditRecipeForm = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { values } = useAppSelector((state) => state.userDetails);
 	const selectedRecipe = useAppSelector((state) => state.selected.recipe);
-	console.log("editform", selectedRecipe);
 
 	const recipe = useAppSelector((state) => state.recipe.recipe);
 	useEffect(() => {
 		dispatch(fetchRecipe(selectedRecipe));
 	}, [selectedRecipe]);
-	console.log(recipe);
 
 	const {
 		recipe_name,
@@ -70,29 +68,28 @@ const EditRecipeForm = (): JSX.Element => {
 					recipe_name: Yup.string().required("Required"),
 					source: Yup.string().required("Required"),
 				})}
-				onSubmit={(
-					values: RecipeProps,
-					actions: FormikHelpers<RecipeProps>
-				) =>
-					setTimeout(async () => {
-						await fetch(
-							import.meta.env.VITE_BACKEND +
-								"/recipe/update/" +
-								recipe._id,
-							{
-								method: "POST",
-								headers: {
-									"Content-Type": "application/json",
-								},
-								body: JSON.stringify(values),
-							}
-						);
-						actions.resetForm();
-						dispatch(setOpenEditModal());
-						// setOpenNewRecipeModal(false);
-						dispatch(setToggleFetchRecipes());
-					}, 500)
-				}>
+				onSubmit={(values: RecipeProps, { resetForm }) => {
+					return new Promise<void>((resolve) => {
+						setTimeout(async () => {
+							await fetch(
+								import.meta.env.VITE_BACKEND +
+									"/recipe/update/" +
+									recipe._id,
+								{
+									method: "POST",
+									headers: {
+										"Content-Type": "application/json",
+									},
+									body: JSON.stringify(values),
+								}
+							);
+							resetForm();
+							dispatch(setOpenEditModal());
+							dispatch(setToggleFetchRecipes());
+							resolve();
+						}, 500);
+					});
+				}}>
 				{({ isSubmitting }) => (
 					<Form>
 						<div className="flex flex-col gap-3">

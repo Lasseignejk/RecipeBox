@@ -7,6 +7,7 @@ import { useAppSelector } from "../../util/hooks";
 import { useAppDispatch } from "../../store";
 import { setToggleFetchRecipes } from "../../reducers/toggleSlice";
 import { setOpenNewRecipeModal } from "../../reducers/openModalSlice";
+import { RecipeProps } from "../../util/interfaces";
 
 interface FormikFormProps {
 	// setOpenNewRecipeModal: (bool: boolean) => void;
@@ -52,31 +53,34 @@ FormikFormProps): JSX.Element => {
 						},
 					],
 					tags: [""],
+					notes: "",
 					_id: userInfo._id,
 				}}
 				validationSchema={Yup.object({
 					recipe_name: Yup.string().required("Required"),
 					source: Yup.string().required("Required"),
 				})}
-				onSubmit={(values, { resetForm }) =>
-					setTimeout(async () => {
-						// console.log(JSON.stringify(values, null, 2));
-						await fetch(
-							import.meta.env.VITE_BACKEND + "/recipe/new",
-							{
-								method: "POST",
-								headers: {
-									"Content-Type": "application/json",
-								},
-								body: JSON.stringify(values),
-							}
-						);
-						resetForm();
-						// setOpenNewRecipeModal(false);
-						dispatch(setOpenNewRecipeModal());
-						dispatch(setToggleFetchRecipes());
-					}, 500)
-				}>
+				onSubmit={(values: RecipeProps, { resetForm }) => {
+					return new Promise<void>((resolve) => {
+						setTimeout(async () => {
+							// console.log(JSON.stringify(values, null, 2));
+							await fetch(
+								import.meta.env.VITE_BACKEND + "/recipe/new",
+								{
+									method: "POST",
+									headers: {
+										"Content-Type": "application/json",
+									},
+									body: JSON.stringify(values),
+								}
+							);
+							resetForm();
+							dispatch(setOpenNewRecipeModal());
+							dispatch(setToggleFetchRecipes());
+							resolve();
+						}, 500);
+					});
+				}}>
 				{({ isSubmitting }) => (
 					<Form>
 						<div className="flex flex-col gap-3">
